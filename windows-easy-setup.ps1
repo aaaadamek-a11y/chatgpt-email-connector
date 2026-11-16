@@ -65,8 +65,10 @@ try {
             if ($LASTEXITCODE -ne 0) { throw 'Priprava Python prostredia zlyhala.' }
         }
         # Already configured workstations do not need repeated package downloads.
-        & $pythonExe -c 'import keyring; import keyring.backends.Windows' 2>$null
-        if ($LASTEXITCODE -ne 0) {
+        $checkStdout = Join-Path $appDir 'keyring-check-stdout.log'
+        $checkStderr = Join-Path $appDir 'keyring-check-stderr.log'
+        $check = Start-Process -FilePath $pythonExe -ArgumentList @('-c', '"import keyring; import keyring.backends.Windows"') -PassThru -Wait -NoNewWindow -RedirectStandardOutput $checkStdout -RedirectStandardError $checkStderr
+        if ($check.ExitCode -ne 0) {
             $wheelDir = Join-Path $appDir 'wheelhouse'
             $stdoutLog = Join-Path $appDir 'dependency-stdout.log'
             $stderrLog = Join-Path $appDir 'dependency-stderr.log'
@@ -82,8 +84,8 @@ try {
                 }
                 throw ('Inštalácia knižníc zlyhala. Môže ísť o blokované internetové spojenie. Diagnostika: ' + $stderrLog)
             }
-            & $pythonExe -c 'import keyring; import keyring.backends.Windows'
-            if ($LASTEXITCODE -ne 0) { throw ('Knižnica keyring sa nedá načítať. Diagnostika: ' + $stderrLog) }
+            $verify = Start-Process -FilePath $pythonExe -ArgumentList @('-c', '"import keyring; import keyring.backends.Windows"') -PassThru -Wait -NoNewWindow -RedirectStandardOutput $checkStdout -RedirectStandardError $checkStderr
+            if ($verify.ExitCode -ne 0) { throw ('Knižnica keyring sa nedá načítať. Diagnostika: ' + $checkStderr) }
         }
     }
 
