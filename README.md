@@ -1,7 +1,7 @@
 # Webglobe Mail Connector
 
 **Read-only email access for ChatGPT and compatible local MCP clients.**  
-**Author / Autor:** **Mgr. Peter Adámek** · **Website / Web:** **https://ad.amek.sk**
+**Author / Autor:** **Mgr. Peter Adámek** · **Website / Web:** **https://ai-konzultant.sk/**
 
 [Slovenská dokumentácia](README.sk.md) · [Security](SECURITY.md)
 
@@ -66,7 +66,7 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting and publication cauti
 ## Author and attribution
 
 Created and maintained by **Mgr. Peter Adámek**.  
-**Website:** https://ad.amek.sk
+**Website:** https://ai-konzultant.sk/
 
 Licensed under the **Apache License, Version 2.0**. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Redistribution of modified versions must preserve applicable copyright, license and NOTICE attributions as required by the license.
 
