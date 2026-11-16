@@ -93,7 +93,7 @@ try {
     }
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.0'
+    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.1'
     $form.ClientSize = New-Object System.Drawing.Size(590,375)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
@@ -183,14 +183,14 @@ try {
         try {
             $address = $mailField.Text.Trim()
             $pass = $passField.Text
-            $host = $incomingField.Text.Trim()
+            $incomingHost = $incomingField.Text.Trim()
             $protocol = if ($protocolBox.SelectedIndex -eq 1) { 'POP3' } else { 'IMAP' }
             if ($address.Length -gt 254 -or $address -notmatch '^[^\s<>@,;]+@[^\s<>@,;]+\.[^\s<>@,;]+$') {
                 throw 'Zadajte platnú úplnú e-mailovú adresu.'
             }
-            if (-not $host -or $host -match '[/@: ]') { throw 'Nesprávny server prijímania.' }
+            if (-not $incomingHost -or $incomingHost -match '[/@: ]') { throw 'Nesprávny server prijímania.' }
             $sameAccount = ($savedAccount -and ($savedAccount.user -ieq $address) -and
-                ($savedAccount.host -ieq $host) -and
+                ($savedAccount.host -ieq $incomingHost) -and
                 (([string]$savedAccount.protocol -eq $protocol) -or
                  (-not $savedAccount.protocol -and $protocol -eq 'IMAP')))
             if (-not $pass -and -not $sameAccount) {
@@ -210,7 +210,7 @@ try {
             Install-LocalComponents
             if (-not $sameAccount -or $pass) {
                 $status.Text = 'Overujem prihlásenie...'; $form.Refresh()
-                Invoke-SetupScript 'account_setup.py' @{ protocol=$protocol;host=$host;user=$address;password=$pass }
+                Invoke-SetupScript 'account_setup.py' @{ protocol=$protocol;host=$incomingHost;user=$address;password=$pass }
             }
             $smtpHost = $smtpField.Text.Trim()
             $mode = if ($securityBox.SelectedIndex -eq 1) { 'STARTTLS' } else { 'SSL' }
