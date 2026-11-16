@@ -3,6 +3,8 @@ name: Build Windows EXE installer
 on:
   workflow_dispatch:
   push:
+    branches:
+      - main
     tags:
       - 'v*'
 
