@@ -1,30 +1,31 @@
 {
   "interface": {
     "displayName": "Webglobe Mail Connector",
-    "shortDescription": "Čítanie e-mailov Webglobe",
-    "longDescription": "Lokálny konektor pre Windows: IMAP prijatá a odoslaná pošta, voliteľné POP3 pre INBOX a návrhy v chate. POP3 vyžaduje TLS na porte 995, UIDL a TOP; vyhľadáva obmedzenú vzorku správ. Bez odosielania a mazania. Autor: Mgr. Peter Adámek, https://ai-konzultant.sk/.",
-    "developerName": "Mgr. Peter Adámek | AI konzultant",
-    "capabilities": [],
+    "shortDescription": "Webglobe e-maily v ChatGPT",
+    "longDescription": "Lok\u00e1lny Webglobe IMAP/POP3 konektor pre Windows. \u010c\u00edtanie a sumariz\u00e1cia po\u0161ty. Volite\u013en\u00e9 odosielanie cez SMTP: predvolene vypnut\u00e9, v\u017edy vy\u017eaduje lok\u00e1lne potvrdenie. Mazanie nie je dostupn\u00e9. Autor: Mgr. Peter Ad\u00e1mek | AI konzultant, https://ai-konzultant.sk/",
+    "developerName": "Mgr. Peter Ad\u00e1mek | AI konzultant",
     "category": "Other",
+    "capabilities": [],
     "defaultPrompt": null
   },
   "name": "webglobe-mail-connector",
-  "version": "0.6.1",
-  "description": "Read-only local Webglobe IMAP/POP3 mail connector for Windows. Each user configures their own mailbox; no sending or deleting.",
+  "version": "0.7.0",
+  "description": "Local IMAP/POP3 reader with optional user-confirmed SMTP sending (disabled by default). Never deletes emails.",
   "author": {
-    "name": "Mgr. Peter Adámek | AI konzultant",
+    "name": "Mgr. Peter Ad\u00e1mek | AI konzultant",
     "url": "https://ai-konzultant.sk/"
   },
   "keywords": [
     "Webglobe",
     "IMAP",
     "POP3",
+    "SMTP",
+    "MCP",
     "email",
-    "read-only",
-    "MCP"
+    "optional sending"
   ],
   "homepage": "https://ai-konzultant.sk/",
-  "mcpServers": "./.mcp.json",
+  "repository": "https://github.com/aaaadamek-a11y/chatgpt-email-connector",
   "license": "Apache-2.0",
-  "repository": "https://github.com/aaaadamek-a11y/chatgpt-email-connector"
+  "mcpServers": "./.mcp.json"
 }

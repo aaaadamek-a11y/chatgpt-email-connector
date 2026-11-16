@@ -1,32 +1,34 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "webglobe-mail-connector",
-  "version": "0.6.1",
-  "description": "Read-only local Webglobe IMAP/POP3 mail connector for Windows. Each user configures their own mailbox; no sending or deleting.",
-  "homepage": "https://ai-konzultant.sk/",
+  "version": "0.7.0",
+  "description": "Local IMAP/POP3 reader with optional user-confirmed SMTP sending (disabled by default). Never deletes emails.",
   "author": {
     "name": "Mgr. Peter Adámek | AI konzultant",
     "url": "https://ai-konzultant.sk/"
   },
-  "keywords": [
-    "Webglobe",
-    "IMAP",
-    "POP3",
-    "email",
-    "read-only",
-    "MCP"
-  ],
+  "homepage": "https://ai-konzultant.sk/",
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "Webglobe Mail Connector",
-        "shortDescription": "Čítanie e-mailov Webglobe",
-        "longDescription": "Lokálny konektor pre Windows: IMAP prijatá a odoslaná pošta, voliteľné POP3 pre INBOX a návrhy v chate. POP3 vyžaduje TLS na porte 995, UIDL a TOP; vyhľadáva obmedzenú vzorku správ. Bez odosielania a mazania. Autor: Mgr. Peter Adámek, https://ai-konzultant.sk/.",
+        "shortDescription": "Webglobe e-maily v ChatGPT",
+        "longDescription": "Lokálny Webglobe IMAP/POP3 konektor pre Windows. Čítanie a sumarizácia pošty. Voliteľné odosielanie cez SMTP: predvolene vypnuté, vždy vyžaduje lokálne potvrdenie. Mazanie nie je dostupné. Autor: Mgr. Peter Adámek | AI konzultant, https://ai-konzultant.sk/",
         "developerName": "Mgr. Peter Adámek | AI konzultant",
+        "category": "Other",
         "capabilities": []
       }
     }
   },
+  "repository": "https://github.com/aaaadamek-a11y/chatgpt-email-connector",
   "license": "Apache-2.0",
-  "repository": "https://github.com/aaaadamek-a11y/chatgpt-email-connector"
+  "keywords": [
+    "Webglobe",
+    "IMAP",
+    "POP3",
+    "SMTP",
+    "MCP",
+    "email",
+    "optional sending"
+  ]
 }

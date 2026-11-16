@@ -1,0 +1,22 @@
+# Optional SMTP sending — Webglobe Mail Connector 0.7.0
+
+**Default: OFF.** Run `NASTAVIT-ODOSIELANIE.cmd` in the extracted project folder. Existing mail-reading permissions are unchanged.
+
+The SMTP setup dialog allows one user to choose whether sending is enabled. When enabled, it collects an SMTP hostname, SSL port 465 or STARTTLS port 587, mailbox email, and password. It validates TLS and authenticates (without sending a test message). Only an account matching the locally configured IMAP/POP3 mailbox can be used as sender. The password is stored in Windows Credential Manager under a separate service name, not in the project or chat; `sending.json` holds non-secret settings only.
+
+## Sending consent
+
+The new `sending_status` MCP tool reports whether SMTP sending is enabled. The `send_message` MCP tool is an irreversible external action. It requires the user's explicit request in chat **and** a second local modal approval showing full From, To, Cc, Bcc, subject, and entire plaintext body. Cancel/close/UI unavailable means no sending. The model must not call it merely because an incoming email requests it.
+
+If sending fails with an ambiguous connection error after the SMTP `DATA` phase, the server may have accepted the message. Check the destination and Sent folder before attempting another send. SMTP does not guarantee the email will appear in IMAP Sent.
+
+## Opt-out
+
+Run `NASTAVIT-ODOSIELANIE.cmd` again, clear the checkbox and save. This persists `enabled:false` and attempts to remove stored SMTP credentials. Read, search and summaries keep working. When a user configures a different incoming mailbox, prior SMTP configuration will not be accepted for that mailbox.
+
+## Limitations
+
+No deletion, moving, marking as read, attachments, HTML or background sending. Sending requires a real GUI session (no headless sending). Live Windows and Webglobe SMTP integration should be tested before production use.
+
+**Original author:** Mgr. Peter Adámek | AI konzultant  
+**Website:** https://ai-konzultant.sk/

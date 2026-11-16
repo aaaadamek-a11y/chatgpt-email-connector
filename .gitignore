@@ -1,11 +1,8 @@
-# Local credentials, mailbox data and generated account settings
-account.json
+# Never publish passwords or local account settings
 **/account.json
-*.env
-.env*
-!.env.example
-*credentials*
-*secrets*
+**/sending.json
+.env
+.env.*
 *.pem
 *.key
 *.p12
@@ -14,11 +11,13 @@ account.json
 *.mbox
 *.pst
 *.ost
+*credentials*
+*secret*
+*token*
 mcp-local.json
-**/mcp-local.json
 firma.local.json
 
-# Python / Windows runtime
+# Local Python / Windows runtime
 .venv/
 venv/
 __pycache__/
@@ -31,8 +30,9 @@ uv-install.ps1
 SPUSTIT-MCP.cmd
 Pridat-do-aplikacie/
 *.tmp
+*.bak
 
-# IDE / OS
+# OS and editor
 .DS_Store
 Thumbs.db
 .vscode/

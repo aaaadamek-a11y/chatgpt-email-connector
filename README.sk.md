@@ -1,40 +1,46 @@
-# Webglobe Mail Connector – dokumentácia v slovenčine
+# Webglobe Mail Connector — návod po slovensky
 
-**Autor:** **Mgr. Peter Adámek**  
-**Web autora:** **https://ai-konzultant.sk/**
+**Autor:** Mgr. Peter Adámek | AI konzultant  
+**Web:** https://ai-konzultant.sk/
 
-> Nezávislý komunitný projekt. Nejde o oficiálny doplnok spoločnosti Webglobe a projekt nie je spoločnosťou Webglobe podporovaný ani schválený.
+Webglobe Mail Connector umožňuje prepojiť ChatGPT s poštovou schránkou cez lokálny MCP server. Podporuje čítanie, vyhľadávanie a sumarizáciu správ prostredníctvom IMAP alebo POP3 a po novom **voliteľné odosielanie cez SMTP**.
 
-## Na čo slúži
+## Čo konektor dokáže
 
-Webglobe Mail Connector umožňuje ChatGPT alebo kompatibilnému lokálnemu MCP klientovi **čítať a vyhľadávať e-maily** v schránke cez zabezpečené IMAP alebo POP3 spojenie. Získané správy môže AI klient sumarizovať a vytvoriť návrh odpovede priamo v chate.
+- **Čítať a vyhľadávať správy** bez zmeny stavu prečítania. Pri IMAP zobrazí aj dostupné priečinky vrátane odoslanej pošty; POP3 podporuje iba doručenú poštu.
+- **Pripravovať návrhy** v konverzácii bez uloženia do e-mailovej schránky.
+- **Voliteľne odosielať** textové správy, len ak si to používateľ na svojom počítači samostatne zapne a každé odoslanie potvrdí v grafickom okne.
+- **Nikdy nemaže, nepresúva ani neoznačuje správy** ako prečítané.
 
-**Doplnok nikdy neposiela e-maily, nemaže ich, nepresúva ich ani nemení ich stav prečítania.** Návrhy sa neukladajú do priečinka Koncepty. HTML a prílohy sa nespracúvajú.
+## Ako zapnúť odosielanie
 
-IMAP podporuje doručenú aj odoslanú poštu a ďalšie priečinky. POP3 podporuje iba INBOX a vyžaduje TLS (port 995), UIDL a TOP; vyhľadávanie je obmedzené na vzorku správ.
+1. Najprv nastavte čítanie pošty cez `NASTAVIT-UCET.cmd`.
+2. Spustite **`NASTAVIT-ODOSIELANIE.cmd`**. Predvolene je voľba odosielania **vypnutá**.
+3. Zaškrtnite „Povoliť odosielanie e-mailov“, nastavte SMTP server, zabezpečenie (SSL port 465 alebo STARTTLS port 587), používateľské meno rovnaké ako nastavená schránka a heslo.
+4. Uložte nastavenia; overí sa SMTP autentifikácia bez poslania skúšobného e-mailu. Heslo sa uloží oddelene do systémovej kľúčenky Windows.
+5. Obnovte alebo znovu importujte vytvorený lokálny MCP doplnok. V chate sa môžete spýtať na `sending_status`.
+6. Ak požiadate ChatGPT o odoslanie konkrétnej správy, vždy sa zobrazí samostatné **lokálne okno s príjemcami, predmetom a celým textom**. Musíte kliknúť na tlačidlo „Potvrdzujem – ODOSLAŤ“. Ak okno zatvoríte alebo zrušíte, nič sa neodošle.
 
-## Inštalácia na Windows
+**Vypnutie:** Opäť spustite `NASTAVIT-ODOSIELANIE.cmd`, zrušte zaškrtnutie a uložte. Funkcie čítania zostanú aktívne. Každý kolega má svoje vlastné nastavenie.
 
-1. Stiahni ZIP repozitára z GitHubu a rozbaľ všetky súbory.
-2. Spusti `NASTAVIT-UCET.cmd` a potvrď prípravu prostredia.
-3. Vyber IMAP alebo POP3. Zadaj správny server poskytovateľa, svoju e-mailovú adresu a heslo **do lokálneho formulára**, nie do chatu.
-4. Klikni na **Uložiť a overiť spojenie**. Heslo sa uloží do systémovej kľúčenky Windows.
-5. V kompatibilnej desktopovej aplikácii pridaj lokálny MCP doplnok pomocou `mcp.json` alebo postupuj podľa `windows-connect.ps1` a `ZACNITE-TU.txt`.
-6. Otvor nový chat a požiadaj o zobrazenie identifikátorov troch posledných správ.
+### Webglobe SMTP
 
-Príklady otázok: „Zobraz dostupné poštové priečinky.“ „Vyhľadaj správy od dodávateľa a zhrň podstatné informácie.“ „Priprav návrh odpovede, ale nič neposielaj.“
+Pre bežné schránky je uvádzaný server `mail.webglobe.sk`, port `465` (SSL) alebo `587` (STARTTLS). Pri inej platforme overte presný hostname u poskytovateľa. Pripojenie na nezašifrovanom porte 25 konektor nepodporuje.
 
-## Bezpečnosť
+### Bezpečnosť a obmedzenia
 
-Každý používateľ nastavuje **vlastnú schránku** na vlastnom počítači. Žiadne heslá, súkromné správy ani konfigurácie účtov nepatria do verejného repozitára. Komunikácia s poštovým serverom je šifrovaná. Obsah e-mailov načítaný do chatu spracúva použitá AI služba; neposielaj jej citlivú poštu bez príslušného súhlasu a interných pravidiel.
+- SMTP vyžaduje šifrovanie a prihlásenie; nemôže odoslať správu v mene ľubovoľnej cudzej adresy.
+- Doplnok odosiela iba čistý text bez príloh; maximálne 20 adresátov celkovo.
+- Obsah e-mailov je nedôveryhodný. Pokyny obsiahnuté v prijatých správach **nesmú** spustiť odosielanie.
+- E-mail prijatý SMTP serverom nemusí byť automaticky uložený do priečinka Odoslané. Ak spojenie zlyhá, najprv overte stav pred opakovaním odoslania.
+- Heslá nezadávajte do chatu ani ich nikdy nezverejňujte v GitHube.
+- Funkcia odosielania musí byť otestovaná na reálnom Windows zariadení s Webglobe SMTP. Automatické testy nepredstavujú potvrdenie odoslania v produkcii.
 
-Inštalátor pri prvom spustení sťahuje `uv` od Astral, Python a závislosti. V spravovanom firemnom prostredí je vhodné najprv skontrolovať tento proces.
+## Autorstvo a licencia
 
-## Autorstvo
+**Original author: Mgr. Peter Adámek | AI konzultant**  
+**Website: https://ai-konzultant.sk/**
 
-**Webglobe Mail Connector vytvoril Mgr. Peter Adámek.**  
-Web: **https://ai-konzultant.sk/**
+Licencia **Apache 2.0** vyžaduje pri ďalšej distribúcii zachovať príslušné licenčné a autorské oznámenia. Pozri [LICENSE](LICENSE) a [NOTICE](NOTICE).
 
-Projekt je dostupný pod licenciou **Apache License 2.0**. Pri distribúcii upravených verzií zachovajte požadované autorské oznámenia a súbor [NOTICE](NOTICE). Podmienky sú v [LICENSE](LICENSE).
-
-Viac: [README.md](README.md), [SECURITY.md](SECURITY.md), [ZACNITE-TU.txt](ZACNITE-TU.txt).
+Toto je nezávislý komunitný projekt, nejde o oficiálny produkt Webglobe.

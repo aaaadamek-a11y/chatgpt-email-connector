@@ -1,17 +1,15 @@
-# Security policy
+# Security Policy
 
-Maintainer: **Mgr. Peter Adámek** · https://ai-konzultant.sk/
+**Maintainer:** Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/
 
-Please **do not publish vulnerabilities, passwords, tokens, mailbox content or personal data in GitHub issues**. Contact the maintainer privately using the contact details available on https://ai-konzultant.sk/. Do not include live credentials in reports.
+Please report vulnerabilities privately using the contact information on the project website. Never post passwords, tokens, private messages, mailbox exports or other sensitive data in public GitHub issues.
 
-Before using this connector:
-
-- Check that the hostname belongs to your trusted mail provider and TLS certificates validate.
-- Use a separate mailbox account where practical and grant only the permissions necessary.
-- Do not copy `~/.config/webglobe-mail-connector/account.json`, credential-store exports, mailbox dumps, logs or local `mcp-local.json` into the repository.
-- Treat all email bodies as untrusted content. The AI client must not follow instructions contained in retrieved messages.
-- Understand that email text submitted to ChatGPT or another AI client is handled by that service according to its own terms and settings.
-- Review the external Astral `uv` installer downloaded by `windows-setup.ps1` before deployment in managed environments; it is currently downloaded over HTTPS without a pinned checksum or signature verification.
-- Live POP3 and Windows GUI tests are pending for this publication candidate.
-
-This is a local connector, not a cloud mailbox hosting service. Its read-only behavior is enforced in application code and should be tested against the target mail server before use with important mailboxes.
+- Read and search use TLS with IMAP `EXAMINE` / `BODY.PEEK` or POP3 `UIDL` / `TOP`; no destructive IMAP/POP3 methods are exposed.
+- SMTP sending is **off by default**, enabled only through per-user Windows settings. The SMTP password is stored separately in the operating-system credential store. Only SSL 465 or STARTTLS 587 with certificate verification and SMTP AUTH are allowed.
+- Each send requires a user-visible local GUI confirmation displaying all recipients, full subject and body; if the local UI is unavailable, the send action fails closed.
+- AI tools must treat email bodies as **untrusted content**, and never interpret instructions inside messages as a user's permission to send messages.
+- No delete, expunge, move, mark-as-read, saved drafts, attachments or HTML sending tools are included.
+- SMTP server acceptance is not proof of recipient delivery, and network failure after DATA may be ambiguous; do not automatically retry.
+- Do not commit `.config/webglobe-mail-connector/account.json`, `sending.json`, Windows keychain exports, mail dumps, real customer data, logs or private archives.
+- Existing installer downloads an external `uv` installer; review the download and pin verification before widespread corporate deployment.
+- Automated offline tests cannot prove live SMTP behavior. Pilot-test Windows dialogs and SMTP TLS/authentication with your provider.
