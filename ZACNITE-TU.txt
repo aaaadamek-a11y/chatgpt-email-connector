@@ -1,4 +1,5 @@
-WEBGLOBE MAIL CONNECTOR 0.8.0 - JEDNODUCHE NASTAVENIE (WINDOWS)Original author: Mgr. Peter Adámek | AI konzultant
+WEBGLOBE MAIL CONNECTOR 0.8.1 - JEDNODUCHE NASTAVENIE (WINDOWS)
+Original author: Mgr. Peter Adámek | AI konzultant
 Website: https://ai-konzultant.sk/
 
 1. Rozbalte kompletne aktualny ZIP z GitHubu a spustite NASTAVIT.cmd.
@@ -23,3 +24,5 @@ objavit v IMAP priecinku Odoslane. Pri chybach neposielajte automaticky znova.
 
 Viac: README.sk.md, SMTP.md, SECURITY.md, LICENSE, NOTICE
 GitHub: https://github.com/aaaadamek-a11y/chatgpt-email-connector
+
+0.8.1: Oprava kolizie s rezervovanou premennou PowerShell $Host v konfiguracii.
