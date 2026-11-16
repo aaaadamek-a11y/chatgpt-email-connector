@@ -12,16 +12,17 @@ Webglobe Mail Connector umožňuje prepojiť ChatGPT s poštovou schránkou cez 
 - **Voliteľne odosielať** textové správy, len ak si to používateľ na svojom počítači samostatne zapne a každé odoslanie potvrdí v grafickom okne.
 - **Nikdy nemaže, nepresúva ani neoznačuje správy** ako prečítané.
 
-## Ako zapnúť odosielanie
+## Jednoduchá inštalácia a aktualizácia (Windows)
 
-1. Najprv nastavte čítanie pošty cez `NASTAVIT-UCET.cmd`.
-2. Spustite **`NASTAVIT-ODOSIELANIE.cmd`**. Predvolene je voľba odosielania **vypnutá**.
-3. Zaškrtnite „Povoliť odosielanie e-mailov“, nastavte SMTP server, zabezpečenie (SSL port 465 alebo STARTTLS port 587), používateľské meno rovnaké ako nastavená schránka a heslo.
-4. Uložte nastavenia; overí sa SMTP autentifikácia bez poslania skúšobného e-mailu. Heslo sa uloží oddelene do systémovej kľúčenky Windows.
-5. Obnovte alebo znovu importujte vytvorený lokálny MCP doplnok. V chate sa môžete spýtať na `sending_status`.
-6. Ak požiadate ChatGPT o odoslanie konkrétnej správy, vždy sa zobrazí samostatné **lokálne okno s príjemcami, predmetom a celým textom**. Musíte kliknúť na tlačidlo „Potvrdzujem – ODOSLAŤ“. Ak okno zatvoríte alebo zrušíte, nič sa neodošle.
+1. Stiahni [aktuálny ZIP z GitHubu](https://github.com/aaaadamek-a11y/chatgpt-email-connector/archive/refs/heads/main.zip) a úplne ho rozbaľ.
+2. Spusti **`NASTAVIT.cmd`**. V jednom okne zadaj **e-mailovú adresu a heslo**. Pre bežnú Webglobe schránku sa IMAP server `mail.webglobe.sk` (port 993, TLS) nastaví automaticky.
+3. Ak chceš aj **odosielať**, zaškrtni príslušnú voľbu. SMTP je predvolene vypnuté, využije rovnakú e-mailovú adresu a heslo. Každé skutočné odoslanie ešte vyžaduje potvrdenie v samostatnom miestnom okne.
+4. Pri staršom serveri Webglobe, inej e-mailovej službe alebo POP3 rozbaľ **Rozšírené nastavenia serverov**. Tu zmeníš IMAP/POP3 alebo SMTP server a zabezpečenie.
+5. Klikni **Overiť a uložiť pripojenie**. Sprievodca pripraví lokálny balík `Webglobe-pridat-doplnok.zip`, ktorý potom použiješ na aktualizáciu existujúceho doplnku v kompatibilnom desktopovom klientovi ChatGPT/MCP. Heslo nezadávaj do chatu.
 
-**Vypnutie:** Opäť spustite `NASTAVIT-ODOSIELANIE.cmd`, zrušte zaškrtnutie a uložte. Funkcie čítania zostanú aktívne. Každý kolega má svoje vlastné nastavenie.
+**Pri aktualizácii:** existujúci účet a nastavený server sa zachovajú. Ak nemeníš schránku, heslo môže zostať prázdne; pri prvom zapnutí SMTP ho však bude treba vyplniť. Staré príkazy `NASTAVIT-UCET.cmd` aj `NASTAVIT-ODOSIELANIE.cmd` teraz otvoria ten istý sprievodca.
+
+Nový systém ukladá tajné údaje do systémovej kľúčenky. Na vypnutie SMTP opäť otvor `NASTAVIT.cmd` a zruš zaškrtnutie. Čítanie pošty zostane funkčné.
 
 ### Webglobe SMTP
 
