@@ -1,7 +1,7 @@
 # Webglobe Mail Connector – dokumentácia v slovenčine
 
 **Autor:** **Mgr. Peter Adámek**  
-**Web autora:** **https://ad.amek.sk**
+**Web autora:** **https://ai-konzultant.sk/**
 
 > Nezávislý komunitný projekt. Nejde o oficiálny doplnok spoločnosti Webglobe a projekt nie je spoločnosťou Webglobe podporovaný ani schválený.
 
@@ -33,7 +33,7 @@ Inštalátor pri prvom spustení sťahuje `uv` od Astral, Python a závislosti. 
 ## Autorstvo
 
 **Webglobe Mail Connector vytvoril Mgr. Peter Adámek.**  
-Web: **https://ad.amek.sk**
+Web: **https://ai-konzultant.sk/**
 
 Projekt je dostupný pod licenciou **Apache License 2.0**. Pri distribúcii upravených verzií zachovajte požadované autorské oznámenia a súbor [NOTICE](NOTICE). Podmienky sú v [LICENSE](LICENSE).
 
