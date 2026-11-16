@@ -2,15 +2,15 @@
   "interface": {
     "displayName": "Webglobe Mail Connector",
     "shortDescription": "Webglobe e-maily v ChatGPT",
-    "longDescription": "Lok\u00e1lny Webglobe IMAP/POP3 konektor pre Windows. \u010c\u00edtanie a sumariz\u00e1cia po\u0161ty. Volite\u013en\u00e9 odosielanie cez SMTP: predvolene vypnut\u00e9, v\u017edy vy\u017eaduje lok\u00e1lne potvrdenie. Mazanie nie je dostupn\u00e9. Autor: Mgr. Peter Ad\u00e1mek | AI konzultant, https://ai-konzultant.sk/",
+    "longDescription": "Jednoduch\u00e9 nastavenie e-mailu a hesla v jednom lok\u00e1lnom okne. \u010c\u00edtanie IMAP/POP3, sumariz\u00e1cia a volite\u013en\u00e9 odosielanie SMTP (predvolene vypnut\u00e9, vy\u017eaduje potvrdenie ka\u017edej spr\u00e1vy). Bez mazania. Autor: Mgr. Peter Ad\u00e1mek | AI konzultant, https://ai-konzultant.sk/",
     "developerName": "Mgr. Peter Ad\u00e1mek | AI konzultant",
     "category": "Other",
     "capabilities": [],
     "defaultPrompt": null
   },
   "name": "webglobe-mail-connector",
-  "version": "0.7.0",
-  "description": "Local IMAP/POP3 reader with optional user-confirmed SMTP sending (disabled by default). Never deletes emails.",
+  "version": "0.8.0",
+  "description": "Easy one-window Windows setup for read-only IMAP/POP3 and optional user-approved SMTP sending. No deletion.",
   "author": {
     "name": "Mgr. Peter Ad\u00e1mek | AI konzultant",
     "url": "https://ai-konzultant.sk/"
