@@ -1,5 +1,6 @@
 """Offline setup/packaging invariant tests (cannot emulate Windows Forms here)."""
 import json
+import re
 from pathlib import Path
 import unittest
 
@@ -30,10 +31,16 @@ class EasySetupSafety(unittest.TestCase):
         self.assertIn("Invoke-SetupScript 'sending_setup.py' @{enabled=$false}", self.form)
         self.assertIn("$sendToggle.Checked = [bool]($savedSending -and $savedSending.enabled)", self.form)
 
+    def test_reserved_powershell_host_variable_is_not_written(self):
+        # $Host is an automatic read-only variable, case-insensitive in PowerShell.
+        self.assertIsNone(re.search(r'\$host\b', self.form, re.IGNORECASE))
+        self.assertIn('$incomingHost = $incomingField.Text.Trim()', self.form)
+        self.assertIn('host=$incomingHost', self.form)
+
     def test_version_and_metadata(self):
         root=json.loads((ROOT/'plugin.json').read_text())
         legacy=json.loads((ROOT/'.codex-plugin/plugin.json').read_text())
-        self.assertEqual(root['version'],'0.8.0')
+        self.assertEqual(root['version'],'0.8.1')
         self.assertEqual(legacy['version'],root['version'])
         self.assertEqual(root['license'],'Apache-2.0')
         self.assertIn('Mgr. Peter Adámek',root['author']['name'])
