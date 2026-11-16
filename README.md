@@ -21,15 +21,19 @@
 
 Supported MCP tools: `list_mailboxes`, `list_messages`, `search_messages`, `read_message`, `prepare_draft`, `sending_status`, and **`send_message`**. The sending tool is advertised as a write-capable, irreversible operation; it is blocked until enabled by the current Windows user. Sending is never triggered by received email content alone.
 
-## Install / update on Windows
+## Easy setup / update on Windows (v0.8.0)
 
-1. Download and fully extract the repository ZIP. Run `NASTAVIT-UCET.cmd` to configure the read-only mailbox first (Python runtime and dependencies are installed locally). Enter passwords **only in the local settings window**, never in ChatGPT or source files.
-2. Connect the local MCP plugin through the generated package or manual configuration as described in `ZACNITE-TU.txt`.
-3. **Optional:** run `NASTAVIT-ODOSIELANIE.cmd` to enable SMTP. The checkbox defaults to **off**. Enter SMTP hostname, SSL 465 or STARTTLS 587, the same email account and SMTP password. An SMTP login/TLS test runs without sending a message.
-4. Reload or re-import the newly generated local MCP plugin. Check `sending_status` before sending.
-5. To disable sending again, run `NASTAVIT-ODOSIELANIE.cmd`, uncheck the box and save. Passwords are stored in Windows Credential Manager, separately from the IMAP/POP3 password.
+1. [Download the current ZIP](https://github.com/aaaadamek-a11y/chatgpt-email-connector/archive/refs/heads/main.zip) and **extract all files** to one folder.
+2. Double-click **`NASTAVIT.cmd`**. A single setup window asks only for **your full email address** and **password**. For standard Webglobe mailboxes, IMAP (`mail.webglobe.sk`, port 993) is preconfigured; no server knowledge is required.
+3. **Optional:** tick *Enable sending*. SMTP uses the same address/password, with `mail.webglobe.sk` port 465 (SSL/TLS) as the default. SMTP is **off by default** and each real send requires an additional local confirmation dialog. No test email is sent during setup.
+4. For another provider, older Webglobe hosting (`imap.nameserver.sk`), POP3, or special settings, expand **Advanced server settings**. Existing configured hostnames and mail settings are preserved when upgrading.
+5. Click **Verify and save connection**. The setup installs missing local dependencies, verifies the chosen mail protocols and prepares `Webglobe-pridat-doplnok.zip`. Open the generated folder and **update/re-import the existing plugin** in your compatible desktop MCP client. Check `sending_status` in a new chat.
 
-Each colleague configures their own account in their own Windows user profile. No shared password is distributed in the plugin ZIP. The connector is local, not a shared hosted mail service.
+To change settings later, run `NASTAVIT.cmd` again, or use the desktop shortcut **Webglobe Mail – nastavenie**. For an unchanged connected mailbox, the existing password can remain blank unless enabling SMTP for the first time. The older `NASTAVIT-UCET.cmd` and `NASTAVIT-ODOSIELANIE.cmd` launch the same wizard for compatibility.
+
+Each Windows user has independent credentials in the OS keychain. Passwords never belong in GitHub, an MCP configuration, or a chat message. Deleting, moving, marking read, and auto-sending without approval remain unavailable.
+
+**Compatibility:** installation requires a Windows desktop client supporting local MCP/stdio plugins; it is not a hosted cloud connector. A clean-machine Windows GUI test is still required before broad deployment to colleagues. See [Slovenský návod](README.sk.md) and [SMTP](SMTP.md).
 
 ### Important safety behavior
 
@@ -48,7 +52,7 @@ For commonly configured Webglobe mailboxes the published outgoing server is `mai
 
 ## Status / limitations
 
-Version **0.7.0** adds optional SMTP sending and a local per-user consent dialog. Automated offline tests validate disabled-by-default behavior and approval paths. Live Webglobe SMTP, Windows GUI and installation require an actual Windows pilot; do not treat offline tests as proof of production delivery.
+Version **0.8.0** introduces a unified Windows setup window and retains optional SMTP sending with per-user consent. Automated offline tests validate disabled-by-default behavior and approval paths. Live Webglobe SMTP, Windows GUI and installation require an actual Windows pilot; do not treat offline tests as proof of production delivery.
 
 ## License and author attribution
 
