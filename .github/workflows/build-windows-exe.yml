@@ -39,6 +39,14 @@ jobs:
             throw 'Reserved PowerShell $Host variable must not be shadowed.'
           }
 
+      - name: Download offline Windows dependencies
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path installer/wheelhouse | Out-Null
+          python -m pip download --only-binary=:all: --dest installer/wheelhouse -r requirements.txt
+          if ($LASTEXITCODE -ne 0) { throw 'Unable to download Windows dependency wheels' }
+          if (-not (Get-ChildItem installer/wheelhouse -Filter '*.whl')) { throw 'Wheelhouse is empty' }
+
       - name: Install Inno Setup
         shell: pwsh
         run: choco install innosetup --yes --no-progress
@@ -65,6 +73,16 @@ jobs:
             if (-not (Test-Path (Join-Path $target $file))) { throw "Installed file missing: $file" }
           }
           Write-Host 'Silent install smoke test passed (mailbox credentials NOT used).'
+          # Prove the packaged wheels work WITHOUT internet during installation.
+          $offlinePython = Join-Path $env:RUNNER_TEMP 'webglobe-offline-test-venv'
+          python -m venv $offlinePython
+          $venvPython = Join-Path $offlinePython 'Scripts\python.exe'
+          & $venvPython -m pip install --no-index --find-links (Join-Path $target 'wheelhouse') -r (Join-Path $target 'requirements.txt')
+          if ($LASTEXITCODE -ne 0) { throw 'Offline keyring wheel installation failed' }
+          & $venvPython -c 'import keyring; import keyring.backends.Windows'
+          if ($LASTEXITCODE -ne 0) { throw 'Offline keyring import failed' }
+          Write-Host 'Offline dependencies verified without PyPI network access.'
+
 
       - name: Upload installer build
         uses: actions/upload-artifact@v4
@@ -88,7 +106,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $version = 'v0.8.1'
+          $version = 'v0.8.2'
           gh release view $version *> $null
           if ($LASTEXITCODE -eq 0) {
             Write-Host "Release $version already exists; not replacing published assets."
