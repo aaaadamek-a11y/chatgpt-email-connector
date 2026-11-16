@@ -37,6 +37,15 @@ try {
                 Copy-Item -LiteralPath $src -Destination $dest -Force
             }
         }
+        # Bundle wheels in the EXE so package setup can work without PyPI access.
+        $bundledWheels = Join-Path $sourceDir 'wheelhouse'
+        $installedWheels = Join-Path $appDir 'wheelhouse'
+        if (Test-Path -LiteralPath $bundledWheels) {
+            if ([IO.Path]::GetFullPath($bundledWheels) -ne [IO.Path]::GetFullPath($installedWheels)) {
+                New-Item -ItemType Directory -Force -Path $installedWheels | Out-Null
+                Copy-Item -Path (Join-Path $bundledWheels '*.whl') -Destination $installedWheels -Force
+            }
+        }
         if (-not (Test-Path -LiteralPath $uvExe)) {
             $consent = [System.Windows.Forms.MessageBox]::Show(
                 'Na prvom spusteni sa do uzivatelskeho profilu nainstaluje uv, Python a kniznica keyring cez internet. Chcete pokracovat?',
@@ -55,8 +64,27 @@ try {
             & $uvExe venv --python 3.12 (Join-Path $appDir '.venv')
             if ($LASTEXITCODE -ne 0) { throw 'Priprava Python prostredia zlyhala.' }
         }
-        & $uvExe pip install --python $pythonExe -r (Join-Path $appDir 'requirements.txt')
-        if ($LASTEXITCODE -ne 0) { throw 'Instalacia kniznic zlyhala.' }
+        # Already configured workstations do not need repeated package downloads.
+        & $pythonExe -c 'import keyring; import keyring.backends.Windows' 2>$null
+        if ($LASTEXITCODE -ne 0) {
+            $wheelDir = Join-Path $appDir 'wheelhouse'
+            $stdoutLog = Join-Path $appDir 'dependency-stdout.log'
+            $stderrLog = Join-Path $appDir 'dependency-stderr.log'
+            $arguments = @('pip','install','--python',('"' + $pythonExe + '"'),'-r',
+                ('"' + (Join-Path $appDir 'requirements.txt') + '"'))
+            if (Test-Path -LiteralPath $wheelDir) {
+                $arguments += @('--offline','--find-links',('"' + $wheelDir + '"'))
+            }
+            $proc = Start-Process -FilePath $uvExe -ArgumentList $arguments -PassThru -Wait -NoNewWindow -RedirectStandardOutput $stdoutLog -RedirectStandardError $stderrLog
+            if ($proc.ExitCode -ne 0) {
+                if (Test-Path -LiteralPath $wheelDir) {
+                    throw ('Inštalácia pripravených knižníc zlyhala. Diagnostika: ' + $stderrLog)
+                }
+                throw ('Inštalácia knižníc zlyhala. Môže ísť o blokované internetové spojenie. Diagnostika: ' + $stderrLog)
+            }
+            & $pythonExe -c 'import keyring; import keyring.backends.Windows'
+            if ($LASTEXITCODE -ne 0) { throw ('Knižnica keyring sa nedá načítať. Diagnostika: ' + $stderrLog) }
+        }
     }
 
     function Invoke-SetupScript([string]$scriptName, [hashtable]$settings) {
@@ -93,7 +121,7 @@ try {
     }
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.1'
+    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.2'
     $form.ClientSize = New-Object System.Drawing.Size(590,375)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
