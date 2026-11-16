@@ -67,7 +67,7 @@ def read_settings():
 def status():
     settings = read_settings()
     if not settings['enabled']:
-        return {'enabled':False,'note':'Sending is disabled by default. Run NASTAVIT-ODOSIELANIE.cmd locally to enable.'}
+        return {'enabled':False,'note':'Sending is disabled by default. Run NASTAVIT.cmd locally to enable.'}
     return {'enabled':True,'host':settings['host'],'port':settings['port'],'mode':settings['mode'],
             'user':settings['user'],'note':'Each message requires explicit local confirmation.'}
 
@@ -109,7 +109,7 @@ def send_message(args, confirmer=None, smtp_opener=smtp_connect):
         raise SendingError('Unsupported send arguments.')
     settings = read_settings()
     if not settings['enabled']:
-        raise SendingError('Sending is disabled. Run NASTAVIT-ODOSIELANIE.cmd on this PC first.')
+        raise SendingError('Sending is disabled. Run NASTAVIT.cmd on this PC first.')
     to, cc, bcc = (addresses(args,k) for k in ('to','cc','bcc'))
     all_recipients = list(dict.fromkeys(to + cc + bcc))
     if not to or len(all_recipients) > MAX_RECIPIENTS:
