@@ -1,0 +1,39 @@
+# Local credentials, mailbox data and generated account settings
+account.json
+**/account.json
+*.env
+.env*
+!.env.example
+*credentials*
+*secrets*
+*.pem
+*.key
+*.p12
+*.pfx
+*.eml
+*.mbox
+*.pst
+*.ost
+mcp-local.json
+**/mcp-local.json
+firma.local.json
+
+# Python / Windows runtime
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.log
+runtime/
+uv-install.ps1
+SPUSTIT-MCP.cmd
+Pridat-do-aplikacie/
+*.tmp
+
+# IDE / OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
