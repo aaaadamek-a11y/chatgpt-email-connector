@@ -81,3 +81,19 @@ jobs:
         run: |
           $exe = (Get-ChildItem dist -Filter '*.exe' | Select-Object -First 1).FullName
           gh release create $env:GITHUB_REF_NAME $exe --title "Webglobe Mail Connector $env:GITHUB_REF_NAME" --notes "Single-file Windows installer. Initial setup may download uv, Python and keyring. Optional SMTP sending is off by default and requires explicit confirmation. No email deletion. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/. Windows SmartScreen may warn because the installer is not code-signed."
+
+      - name: Publish tested installer as pre-release on main
+        if: github.ref == 'refs/heads/main'
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $version = 'v0.8.1'
+          gh release view $version *> $null
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "Release $version already exists; not replacing published assets."
+            exit 0
+          }
+          $exe = (Get-ChildItem dist -Filter '*.exe' | Select-Object -First 1).FullName
+          gh release create $version $exe --target $env:GITHUB_SHA --prerelease --title "Webglobe Mail Connector $version (Windows installer preview)" --notes "One-file Windows installer tested by GitHub Actions. First-run setup downloads Python/uv if needed. Email sending is optional and requires explicit confirmation; email deletion is not supported. This unsigned preview may trigger Microsoft SmartScreen. Windows GUI and live Webglobe IMAP/SMTP still require a user pilot. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
+          if ($LASTEXITCODE -ne 0) { throw 'GitHub pre-release publication failed.' }
