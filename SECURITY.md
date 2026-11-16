@@ -1,8 +1,8 @@
 # Security policy
 
-Maintainer: **Mgr. Peter Adámek** · https://ad.amek.sk
+Maintainer: **Mgr. Peter Adámek** · https://ai-konzultant.sk/
 
-Please **do not publish vulnerabilities, passwords, tokens, mailbox content or personal data in GitHub issues**. Contact the maintainer privately using the contact details available on https://ad.amek.sk. Do not include live credentials in reports.
+Please **do not publish vulnerabilities, passwords, tokens, mailbox content or personal data in GitHub issues**. Contact the maintainer privately using the contact details available on https://ai-konzultant.sk/. Do not include live credentials in reports.
 
 Before using this connector:
 
