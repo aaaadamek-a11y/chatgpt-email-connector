@@ -1,4 +1,4 @@
-# Optional SMTP sending — Webglobe Mail Connector 0.8.0
+# Optional SMTP sending — Webglobe Mail Connector 0.8.1
 
 **Default: OFF.** Run `NASTAVIT.cmd` in the extracted project folder. (Legacy `NASTAVIT-ODOSIELANIE.cmd` opens the same wizard.) Existing mail-reading permissions are unchanged.
 
