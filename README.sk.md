@@ -12,6 +12,20 @@ Webglobe Mail Connector umožňuje prepojiť ChatGPT s poštovou schránkou cez 
 - **Voliteľne odosielať** textové správy, len ak si to používateľ na svojom počítači samostatne zapne a každé odoslanie potvrdí v grafickom okne.
 - **Nikdy nemaže, nepresúva ani neoznačuje správy** ako prečítané.
 
+## Jednosúborová inštalácia pre Windows (EXE)
+
+Pre bežných používateľov je pripravený **inštalátor pozostávajúci z jedného súboru** `Webglobe-Mail-Connector-Setup-0.8.1.exe`. Zdrojový kód a dokumentácia zostávajú verejné na GitHube.
+
+- **[GitHub Releases](https://github.com/aaaadamek-a11y/chatgpt-email-connector/releases)** – tu bude dostupný EXE po úspešnom zostavení, otestovaní a vydaní verzie.
+- **[GitHub Actions – zostavenie EXE](https://github.com/aaaadamek-a11y/chatgpt-email-connector/actions/workflows/build-windows-exe.yml)** – zostavené súbory sú dostupné ako artefakty úspešného behu. GitHub môže vyžadovať prihlásenie.
+- EXE rozbalí potrebné súbory do používateľského profilu a po dokončení ponúkne otvorenie jedného nastavenia. **Nie je nutné manuálne rozbaľovať zdrojový ZIP.**
+- Pri prvom nastavení sa môže stiahnuť `uv`, Python a závislosti; používateľ ich nemusí inštalovať ručne.
+- Osobné nastavenia a heslá zostávajú oddelené od inštalátora. SMTP je predvolene vypnuté; odoslanie vyžaduje lokálne potvrdenie a mazanie správ nie je podporované.
+- Inštalátor zatiaľ nie je digitálne podpísaný, preto môže Windows SmartScreen zobraziť upozornenie. Sťahujte ho iba z oficiálneho repozitára a overte jeho pôvod.
+- Po nastavení sa môže vyžadovať import alebo aktualizácia vygenerovaného lokálneho MCP balíka priamo v ChatGPT. Inštalátor nevykonáva automatické zásahy do účtu ChatGPT.
+
+**Pre vývojárov** zostáva zachovaný postup so zdrojovým ZIP. Skript na vytvorenie EXE je `installer/webglobe.iss`, automatická zostava je v `.github/workflows/build-windows-exe.yml`. Reálne pripojenie ku konkrétnemu poštovému serveru treba otestovať samostatne.
+
 ## Jednoduchá inštalácia a aktualizácia (Windows)
 
 1. Stiahni [aktuálny ZIP z GitHubu](https://github.com/aaaadamek-a11y/chatgpt-email-connector/archive/refs/heads/main.zip) a úplne ho rozbaľ.
