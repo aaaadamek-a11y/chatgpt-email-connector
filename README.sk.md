@@ -45,3 +45,5 @@ Pre bežné schránky je uvádzaný server `mail.webglobe.sk`, port `465` (SSL) 
 Licencia **Apache 2.0** vyžaduje pri ďalšej distribúcii zachovať príslušné licenčné a autorské oznámenia. Pozri [LICENSE](LICENSE) a [NOTICE](NOTICE).
 
 Toto je nezávislý komunitný projekt, nejde o oficiálny produkt Webglobe.
+
+**Oprava 0.8.1:** Opravená chyba PowerShell `Cannot overwrite variable Host because it is read-only or constant` v nastavení účtu. Ak sa objavila, stiahni nový ZIP a znovu spusti `NASTAVIT.cmd`.
