@@ -1,21 +1,17 @@
-WEBGLOBE MAIL CONNECTOR 0.7.0 - WINDOWS, IMAP + POP3 + VOLITELNE SMTP
-Original author: Mgr. Peter Adámek | AI konzultant
+WEBGLOBE MAIL CONNECTOR 0.8.0 - JEDNODUCHE NASTAVENIE (WINDOWS)Original author: Mgr. Peter Adámek | AI konzultant
 Website: https://ai-konzultant.sk/
 
-1. Rozbalte ZIP a spustite NASTAVIT-UCET.cmd pre nastavenie prijimania posty.
-2. Pripojte MCP plugin k ChatGPT; umozni citat, hladat a sumarizovat spravy.
-3. ODOSIELANIE je predvolene VYPNUTE. Ak ho chcete povolit,
-   spustite NASTAVIT-ODOSIELANIE.cmd. Zaskrtnite povolit odosielanie,
-   zadajte SMTP host, TLS/SSL rezim, prihlasovacie meno a heslo.
-   Napr. pre bezne schranky Webglobe mail.webglobe.sk:465 SSL
-   alebo mail.webglobe.sk:587 STARTTLS. Overte skutocny server u poskytovatela.
-4. Ulozte: SMTP sa prihlasi bez poslania skusobnej spravy.
-   Vygeneruje sa aktualny lokalny MCP ZIP; obnovte ho v aplikacii.
-5. Kazdy pokus odoslat email musi byt potvrdeny v SAMOSTATNOM LOKALNOM OKNE,
-   ktore ukazuje odosielatela, prijemcov, kopie, skryte kopie, predmet a cely text.
-   Pri zruseni, zavreti okna alebo bez grafickeho prostredia sa NIC NEODOSLE.
-6. Na vypnutie odosielania opat spustite NASTAVIT-ODOSIELANIE.cmd,
-   odskrtnite povolit, ulozte a obnovte konektor.
+1. Rozbalte kompletne aktualny ZIP z GitHubu a spustite NASTAVIT.cmd.
+2. Zadajte len e-mailovu adresu a heslo. Bezne Webglobe servery sa doplnia automaticky.
+   Pre iny alebo starsi server rozbalte Rozsirene nastavenia serverov.
+3. Volitelne zaskrtnite Povolit odosielanie. Inak zostava SMTP VYPNUTE.
+   Kazda odosielana sprava vyzaduje samostatne lokalne potvrdenie.
+4. Kliknite Overit a ulozit pripojenie. Po overeni sa pripravi ZIP pre MCP klienta.
+5. V existujucom doplnku v ChatGPT obnovte/naimportujte lokalny ZIP z priecinka
+   %LOCALAPPDATA%\WebglobeMailConnector\Pridat-do-aplikacie.
+6. Overte citanie priecinkov a sending_status; nic neposielajte bez potvrdenia.
+7. Neskor nastavenia zmenite cez NASTAVIT.cmd alebo plochovu skratku.
+   Povodne NASTAVIT-UCET.cmd a NASTAVIT-ODOSIELANIE.cmd spustia to iste okno.
 
 Nikdy neposkytujte hesla do konverzacie. Kazdy pouzivatel si nastavuje vlastny ucet.
 SMTP heslo sa uklada oddelene do Windows Credential Manager.
