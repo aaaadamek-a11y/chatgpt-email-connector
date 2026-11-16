@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "webglobe-mail": {
+      "type": "stdio",
+      "command": "powershell.exe",
+      "args": [
+        "-NoProfile",
+        "-NonInteractive",
+        "-ExecutionPolicy",
+        "Bypass",
+        "-File",
+        "${PLUGIN_ROOT}/launch.ps1"
+      ],
+      "env": {},
+      "cwd": "${PLUGIN_ROOT}"
+    }
+  }
+}
