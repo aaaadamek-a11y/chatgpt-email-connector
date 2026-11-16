@@ -21,7 +21,7 @@
 
 Supported MCP tools: `list_mailboxes`, `list_messages`, `search_messages`, `read_message`, `prepare_draft`, `sending_status`, and **`send_message`**. The sending tool is advertised as a write-capable, irreversible operation; it is blocked until enabled by the current Windows user. Sending is never triggered by received email content alone.
 
-## Easy setup / update on Windows (v0.8.1)
+## Easy setup / update on Windows (v0.8.2)
 
 1. [Download the current ZIP](https://github.com/aaaadamek-a11y/chatgpt-email-connector/archive/refs/heads/main.zip) and **extract all files** to one folder.
 2. Double-click **`NASTAVIT.cmd`**. A single setup window asks only for **your full email address** and **password**. For standard Webglobe mailboxes, IMAP (`mail.webglobe.sk`, port 993) is preconfigured; no server knowledge is required.
@@ -52,7 +52,7 @@ For commonly configured Webglobe mailboxes the published outgoing server is `mai
 
 ## Status / limitations
 
-Version **0.8.1** introduces a unified Windows setup window and retains optional SMTP sending with per-user consent. Automated offline tests validate disabled-by-default behavior and approval paths. Live Webglobe SMTP, Windows GUI and installation require an actual Windows pilot; do not treat offline tests as proof of production delivery.
+Version **0.8.2** introduces a unified Windows setup window and retains optional SMTP sending with per-user consent. Automated offline tests validate disabled-by-default behavior and approval paths. Live Webglobe SMTP, Windows GUI and installation require an actual Windows pilot; do not treat offline tests as proof of production delivery.
 
 ## License and author attribution
 
@@ -60,4 +60,6 @@ Copyright 2026 **Mgr. Peter Adámek | AI konzultant** — https://ai-konzultant.
 
 Licensed under the **Apache License, Version 2.0**. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Redistributed copies and modified versions must preserve applicable copyright, license and NOTICE attribution as provided by the license.
 
-**0.8.1 fix:** Corrected the Windows PowerShell automatic `$Host` variable collision in the account setup wizard. Download and extract the updated ZIP before re-running `NASTAVIT.cmd`.
+**0.8.2 fix:** Corrected the Windows PowerShell automatic `$Host` variable collision in the account setup wizard. Download and extract the updated ZIP before re-running `NASTAVIT.cmd`.
+
+**Windows installer 0.8.2:** ships predownloaded Windows wheels for offline `keyring` setup and skips dependency installation when already working. On failure, check `%LOCALAPPDATA%\WebglobeMailConnector\dependency-stderr.log` after removing private details.
