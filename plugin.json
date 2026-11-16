@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "webglobe-mail-connector",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Easy one-window Windows setup for read-only IMAP/POP3 and optional user-approved SMTP sending. No deletion.",
   "author": {
     "name": "Mgr. Peter Adámek | AI konzultant",
