@@ -1,0 +1,53 @@
+WEBGLOBE MAIL CONNECTOR 0.6.1 - WINDOWS, IMAP + POP3
+Autor: Mgr. Peter Adámek | https://ad.amek.sk
+
+1. Rozbalte cely ZIP a spustite NASTAVIT-UCET.cmd.
+2. Vyberte protokol. IMAP zostava predvoleny (port 993 TLS).
+   POP3 pouziva port 995 TLS. Pri vybere POP3 sa pole servera vymaze:
+   zadajte skutocny POP3 hostname z nastaveni svojho poskytovatela.
+   IMAP server sa automaticky nepovazuje za POP3 server.
+3. Zadajte vlastny e-mail a heslo, kliknite Ulozit a overit spojenie.
+   Heslo sa ulozi do systemovej klucenky. Existujuce IMAP nastavenie sa
+   nezmeni, kym novy rezim vyslovne neulozite a overenie neprejde.
+4. Nainstalujte doplnok z odkazu od spravcu. Ak uz bol pridany, aktualizuje
+   sa jeho povodna identita; novu verziu nepridavajte ako dalsi Novy doplnok.
+   Pri prvej instalacii vo vlastnom ucte mozno pouzit aj import ZIP.
+5. Obnovte doplnok a otvorte novy chat. Skuste:
+   Pouzi Webglobe Mail Connector. Zobraz dostupne priecinky a tri najnovsie
+   identifikatory prijatych sprav. Nic neposielaj ani nemen.
+
+IMAP
+- Prijata aj odoslana posta, dostupne serverove priecinky.
+- Vyhladavanie prebieha na serveri; dotazy bez diakritiky.
+- Stav precitania sa nemeni (EXAMINE a BODY.PEEK).
+
+POP3 - DOSTUPNOST A OBMEDZENIA
+- Iba INBOX. Odoslana posta a dalsie priecinky vyzaduju IMAP.
+- Server musi podporovat UIDL a TOP. Namiesto RETR sa pouziva TOP;
+  konektor nikdy neposiela RETR ani DELE. Pri nepodporovanom TOP sa
+  citanie zastavi. Spravanie TOP treba pilotne overit na danom serveri.
+- Zoznam pouziva trvale POP3 UIDL, nie poradie sprav ako trvale ID.
+- Poradie vychadza z cisel sprav aktualnej POP3 relacie, nie z datumu emailu.
+- Vyhladavanie lokalne nacita najviac 50 sprav, max. 5 MB a 20 sekund
+  plus dokoncovanie prave beziaceho prikazu. Serverove odpovede maju timeout.
+- Vysledok obsahuje scanned_messages a search_complete. Pocet matches
+  znamena zhody iba v skontrolovanej vzorke, nie v celej schranke.
+- Hlada sa v hlavickach a prvych 24000 znakoch cisteho textu.
+- Spravy nad 500 KB sa preskocia; search_complete bude false.
+- Ak iny POP3 klient spravy vymaze zo servera, konektor ich uz neuvidi.
+- Lokalny vyhladavaci index ani obsah sprav sa neukladaju na disk.
+
+Navrhy emailov zostavaju iba v chate. Konektor nic neodosiela ani neuklada
+koncepty do schranky. Obsah nacitany do chatu spracuva AI sluzba klienta.
+HTML a prilohy sa nespracuvavaju. Hesla neposielajte do chatu.
+
+Pri podpore POP3 sa port 110 bez sifrovania ani STLS nepouziva; iba TLS 995.
+Ak zmena neprejde, povodne nastavenie uctu zostane zachovane.
+Na navrat k IMAP spustite nastavenie a vyberte IMAP.
+
+Predchadzajuce overenie 0.6.0: 31 automatizovanych testov.
+Nove vydanie 0.6.1 upravuje len autorstvo a dokumentaciu.
+Zive POP3 pripojenie a Windows formular este potrebuju pilotny test.
+
+Projekt: https://github.com/aaaadamek-a11y/chatgpt-email-connector
+Licencia: Apache-2.0. Autor: Mgr. Peter Adámek, https://ad.amek.sk
