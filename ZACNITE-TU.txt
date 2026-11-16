@@ -1,5 +1,5 @@
 WEBGLOBE MAIL CONNECTOR 0.6.1 - WINDOWS, IMAP + POP3
-Autor: Mgr. Peter Adámek | https://ad.amek.sk
+Autor: Mgr. Peter Adámek | https://ai-konzultant.sk/
 
 1. Rozbalte cely ZIP a spustite NASTAVIT-UCET.cmd.
 2. Vyberte protokol. IMAP zostava predvoleny (port 993 TLS).
@@ -50,4 +50,4 @@ Nove vydanie 0.6.1 upravuje len autorstvo a dokumentaciu.
 Zive POP3 pripojenie a Windows formular este potrebuju pilotny test.
 
 Projekt: https://github.com/aaaadamek-a11y/chatgpt-email-connector
-Licencia: Apache-2.0. Autor: Mgr. Peter Adámek, https://ad.amek.sk
+Licencia: Apache-2.0. Autor: Mgr. Peter Adámek, https://ai-konzultant.sk/
