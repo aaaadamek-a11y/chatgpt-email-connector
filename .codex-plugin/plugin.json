@@ -9,7 +9,7 @@
     "defaultPrompt": null
   },
   "name": "webglobe-mail-connector",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "Easy one-window Windows setup for read-only IMAP/POP3 and optional user-approved SMTP sending. No deletion.",
   "author": {
     "name": "Mgr. Peter Ad\u00e1mek | AI konzultant",
