@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "webglobe-mail-connector",
-  "version": "0.7.0",
-  "description": "Local IMAP/POP3 reader with optional user-confirmed SMTP sending (disabled by default). Never deletes emails.",
+  "version": "0.8.0",
+  "description": "Easy one-window Windows setup for read-only IMAP/POP3 and optional user-approved SMTP sending. No deletion.",
   "author": {
     "name": "Mgr. Peter Adámek | AI konzultant",
     "url": "https://ai-konzultant.sk/"
@@ -13,7 +13,7 @@
       "interface": {
         "displayName": "Webglobe Mail Connector",
         "shortDescription": "Webglobe e-maily v ChatGPT",
-        "longDescription": "Lokálny Webglobe IMAP/POP3 konektor pre Windows. Čítanie a sumarizácia pošty. Voliteľné odosielanie cez SMTP: predvolene vypnuté, vždy vyžaduje lokálne potvrdenie. Mazanie nie je dostupné. Autor: Mgr. Peter Adámek | AI konzultant, https://ai-konzultant.sk/",
+        "longDescription": "Jednoduché nastavenie e-mailu a hesla v jednom lokálnom okne. Čítanie IMAP/POP3, sumarizácia a voliteľné odosielanie SMTP (predvolene vypnuté, vyžaduje potvrdenie každej správy). Bez mazania. Autor: Mgr. Peter Adámek | AI konzultant, https://ai-konzultant.sk/",
         "developerName": "Mgr. Peter Adámek | AI konzultant",
         "category": "Other",
         "capabilities": []
