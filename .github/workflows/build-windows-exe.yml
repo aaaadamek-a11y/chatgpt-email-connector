@@ -106,12 +106,23 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          $version = 'v0.8.2'
-          gh release view $version *> $null
-          if ($LASTEXITCODE -eq 0) {
-            Write-Host "Release $version already exists; not replacing published assets."
+          # Do not allow an old concurrent run to overwrite a newer release.
+          $latestHead = gh api "repos/$env:GITHUB_REPOSITORY/commits/main" --jq '.sha'
+          if ($LASTEXITCODE -ne 0) { throw 'Cannot verify current main commit' }
+          if ($latestHead.Trim() -ne $env:GITHUB_SHA) {
+            Write-Host "A newer commit is available; skipping release publication."
             exit 0
           }
+          $version = 'v0.8.2'
           $exe = (Get-ChildItem dist -Filter '*.exe' | Select-Object -First 1).FullName
-          gh release create $version $exe --target $env:GITHUB_SHA --prerelease --title "Webglobe Mail Connector $version (Windows installer preview)" --notes "One-file Windows installer tested by GitHub Actions. First-run setup downloads Python/uv if needed. Email sending is optional and requires explicit confirmation; email deletion is not supported. This unsigned preview may trigger Microsoft SmartScreen. Windows GUI and live Webglobe IMAP/SMTP still require a user pilot. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
-          if ($LASTEXITCODE -ne 0) { throw 'GitHub pre-release publication failed.' }
+          $notes = "Single-file unsigned Windows installer with offline keyring wheels. Source commit: $env:GITHUB_SHA. Keyring is reused when already installed; failed dependency setup records diagnostic logs. Optional SMTP sending requires user confirmation and no email deletion is supported. Windows GUI and live Webglobe connection still require user testing. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
+          gh release view $version *> $null
+          if ($LASTEXITCODE -eq 0) {
+            gh release upload $version $exe --clobber
+            if ($LASTEXITCODE -ne 0) { throw 'Unable to refresh installer EXE asset' }
+            gh release edit $version --notes $notes --prerelease
+            if ($LASTEXITCODE -ne 0) { throw 'Unable to update release notes' }
+          } else {
+            gh release create $version $exe --target $env:GITHUB_SHA --prerelease --title "Webglobe Mail Connector $version (Windows installer preview)" --notes $notes
+            if ($LASTEXITCODE -ne 0) { throw 'GitHub pre-release creation failed' }
+          }
