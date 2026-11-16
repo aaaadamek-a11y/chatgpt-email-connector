@@ -3,10 +3,10 @@
   "name": "webglobe-mail-connector",
   "version": "0.6.1",
   "description": "Read-only local Webglobe IMAP/POP3 mail connector for Windows. Each user configures their own mailbox; no sending or deleting.",
-  "homepage": "https://ad.amek.sk",
+  "homepage": "https://ai-konzultant.sk/",
   "author": {
-    "name": "Mgr. Peter Adámek",
-    "url": "https://ad.amek.sk"
+    "name": "Mgr. Peter Adámek | AI konzultant",
+    "url": "https://ai-konzultant.sk/"
   },
   "keywords": [
     "Webglobe",
@@ -21,8 +21,8 @@
       "interface": {
         "displayName": "Webglobe Mail Connector",
         "shortDescription": "Čítanie e-mailov Webglobe",
-        "longDescription": "Lokálny konektor pre Windows: IMAP prijatá a odoslaná pošta, voliteľné POP3 pre INBOX a návrhy v chate. POP3 vyžaduje TLS na porte 995, UIDL a TOP; vyhľadáva obmedzenú vzorku správ. Bez odosielania a mazania. Autor: Mgr. Peter Adámek, https://ad.amek.sk.",
-        "developerName": "Mgr. Peter Adámek",
+        "longDescription": "Lokálny konektor pre Windows: IMAP prijatá a odoslaná pošta, voliteľné POP3 pre INBOX a návrhy v chate. POP3 vyžaduje TLS na porte 995, UIDL a TOP; vyhľadáva obmedzenú vzorku správ. Bez odosielania a mazania. Autor: Mgr. Peter Adámek, https://ai-konzultant.sk/.",
+        "developerName": "Mgr. Peter Adámek | AI konzultant",
         "capabilities": []
       }
     }
