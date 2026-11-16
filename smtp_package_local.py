@@ -5,7 +5,7 @@ import subprocess
 import sys
 import zipfile
 
-VERSION = '0.8.0'
+VERSION = '0.8.1'
 
 def build():
     base = Path(__file__).resolve().parent
