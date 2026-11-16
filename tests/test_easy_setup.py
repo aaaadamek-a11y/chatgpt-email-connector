@@ -37,10 +37,21 @@ class EasySetupSafety(unittest.TestCase):
         self.assertIn('$incomingHost = $incomingField.Text.Trim()', self.form)
         self.assertIn('host=$incomingHost', self.form)
 
+    def test_offline_installer_dependency_support(self):
+        installer = (ROOT/'installer'/'webglobe.iss').read_text(encoding='utf-8')
+        workflow = (ROOT/'.github/workflows/build-windows-exe.yml').read_text(encoding='utf-8')
+        self.assertIn('wheelhouse\\*.whl', installer)
+        self.assertIn("Join-Path $sourceDir 'wheelhouse'", self.form)
+        self.assertIn("Join-Path $appDir 'wheelhouse'", self.form)
+        self.assertIn("'--offline','--find-links'", self.form)
+        self.assertIn('dependency-stderr.log', self.form)
+        self.assertIn('pip download --only-binary=:all:', workflow)
+        self.assertIn('pip install --no-index --find-links', workflow)
+
     def test_version_and_metadata(self):
         root=json.loads((ROOT/'plugin.json').read_text())
         legacy=json.loads((ROOT/'.codex-plugin/plugin.json').read_text())
-        self.assertEqual(root['version'],'0.8.1')
+        self.assertEqual(root['version'],'0.8.2')
         self.assertEqual(legacy['version'],root['version'])
         self.assertEqual(root['license'],'Apache-2.0')
         self.assertTrue(root['author']['name'].startswith('Mgr. Peter Ad'))
