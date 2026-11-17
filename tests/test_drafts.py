@@ -64,7 +64,7 @@ class TestDrafts(unittest.TestCase):
         self.assertEqual(len(imap.appended), 1)
         name, flags, _date, raw = imap.appended[0]
         self.assertEqual(name, '"Drafts"')
-        self.assertEqual(flags, r"(\\Draft)")
+        self.assertEqual(flags, "(\Draft)")
         self.assertIn(b"Subject: Koncept", raw)
         self.assertIn(b"Bcc: hidden@example.com", raw)
         self.assertEqual(imap.logged_out, 1)
@@ -114,7 +114,7 @@ class TestDrafts(unittest.TestCase):
                 self.appended.append(args)
                 raise OSError("network lost after APPEND")
         imap=BrokenIMAP()
-        with self.assertRaisesRegex(draft_store.DraftError,"verify"):
+        with self.assertRaisesRegex(draft_store.DraftError,"Check Drafts"):
             draft_store.save_draft(self.payload(), factory=lambda _:imap)
         self.assertEqual(len(imap.appended),1)
 
