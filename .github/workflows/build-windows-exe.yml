@@ -69,7 +69,7 @@ jobs:
           $target = Join-Path $env:RUNNER_TEMP 'WebglobeInstallerSmoke'
           $process = Start-Process -FilePath $exe -ArgumentList @('/VERYSILENT','/SUPPRESSMSGBOXES','/NORESTART',"/DIR=$target") -PassThru -Wait
           if ($process.ExitCode -ne 0) { throw "Installer failed with exit code $($process.ExitCode)" }
-          foreach ($file in @('NASTAVIT.cmd','windows-easy-setup.ps1','smtp_server.py','NOTICE','LICENSE')) {
+          foreach ($file in @('NASTAVIT.cmd','windows-easy-setup.ps1','smtp_server.py','draft_store.py','NOTICE','LICENSE')) {
             if (-not (Test-Path (Join-Path $target $file))) { throw "Installed file missing: $file" }
           }
           Write-Host 'Silent install smoke test passed (mailbox credentials NOT used).'
@@ -98,7 +98,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           $exe = (Get-ChildItem dist -Filter '*.exe' | Select-Object -First 1).FullName
-          gh release create $env:GITHUB_REF_NAME $exe --title "Webglobe Mail Connector $env:GITHUB_REF_NAME" --notes "Single-file Windows installer. Initial setup may download uv, Python and keyring. Optional SMTP sending is off by default and requires explicit confirmation. No email deletion. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/. Windows SmartScreen may warn because the installer is not code-signed."
+          gh release create $env:GITHUB_REF_NAME $exe --title "Webglobe Mail Connector $env:GITHUB_REF_NAME" --notes "Single-file Windows installer. Initial setup may download uv, Python and keyring. SMTP is selected for new setups but not enabled until credentials are verified; every send requires explicit confirmation. No email deletion. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/. Windows SmartScreen may warn because the installer is not code-signed."
 
       - name: Publish tested installer as pre-release on main
         if: github.ref == 'refs/heads/main'
@@ -113,9 +113,9 @@ jobs:
             Write-Host "A newer commit is available; skipping release publication."
             exit 0
           }
-          $version = 'v0.8.3'
+          $version = 'v0.9.0'
           $exe = (Get-ChildItem dist -Filter '*.exe' | Select-Object -First 1).FullName
-          $notes = "Single-file unsigned Windows installer fixes WinError 448 by launching the mail setup only after Inno Setup exits, while keeping RedirectionGuard enabled. Offline keyring wheels included. Source commit: $env:GITHUB_SHA. Keyring is reused when already installed; failed dependency setup records diagnostic logs. Optional SMTP sending requires user confirmation and no email deletion is supported. Windows GUI and live Webglobe connection still require user testing. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
+          $notes = "Single-file unsigned Windows installer fixes WinError 448 by launching the mail setup only after Inno Setup exits, while keeping RedirectionGuard enabled. Offline keyring wheels included. Source commit: $env:GITHUB_SHA. Keyring is reused when already installed; failed dependency setup records diagnostic logs. New setups select SMTP by default but require verified credentials before enabling, and every send requires user confirmation. IMAP Drafts saving is supported without SMTP delivery; no email deletion is supported. Windows GUI and live Webglobe connection still require user testing. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
           gh release view $version *> $null
           if ($LASTEXITCODE -eq 0) {
             gh release upload $version $exe --clobber
