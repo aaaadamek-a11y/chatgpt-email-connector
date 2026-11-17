@@ -89,6 +89,9 @@ class TestSMTP(unittest.TestCase):
             self.assertTrue(x[name]['annotations']['readOnlyHint'])
         self.assertNotIn('delete_message',x)
         self.assertNotIn('move_message',x)
+        self.assertIn('save_draft',x)
+        self.assertFalse(x['save_draft']['annotations']['readOnlyHint'])
+        self.assertFalse(x['save_draft']['annotations']['destructiveHint'])
     def test_enabled_state_invalid_on_account_switch(self):
         self.enabled();server.CONFIG.write_text(json.dumps({'user':'someoneelse@example.com'}))
         with self.assertRaises(smtp_sender.SendingError):smtp_sender.status()
