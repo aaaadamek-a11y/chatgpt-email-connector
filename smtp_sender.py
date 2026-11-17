@@ -67,7 +67,7 @@ def read_settings():
 def status():
     settings = read_settings()
     if not settings['enabled']:
-        return {'enabled':False,'note':'Sending is disabled by default. Run NASTAVIT.cmd locally to enable.'}
+        return {'enabled':False,'note':'Sending is not configured or is disabled. Use NASTAVIT.cmd locally to configure it.'}
     return {'enabled':True,'host':settings['host'],'port':settings['port'],'mode':settings['mode'],
             'user':settings['user'],'note':'Each message requires explicit local confirmation.'}
 
