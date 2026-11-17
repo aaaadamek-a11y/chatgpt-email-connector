@@ -4,7 +4,7 @@
 ; Build with Inno Setup 6: ISCC.exe installer\webglobe.iss
 
 #define MyAppName "Webglobe Mail Connector"
-#define MyAppVersion "0.8.2"
+#define MyAppVersion "0.8.3"
 #define MyPublisher "Mgr. Peter Adámek | AI konzultant"
 #define MyURL "https://ai-konzultant.sk/"
 
@@ -62,5 +62,7 @@ Source: "..\NOTICE"; DestDir: "{app}"; Flags: ignoreversion
 [Icons]
 Name: "{autodesktop}\Webglobe Mail - Nastavenie"; Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -STA -ExecutionPolicy Bypass -File ""{app}\windows-easy-setup.ps1"""; WorkingDir: "{app}"
 
-[Run]
-Filename: "{sys}\WindowsPowerShell\v1.0\powershell.exe"; Parameters: "-NoProfile -STA -ExecutionPolicy Bypass -File ""{app}\windows-easy-setup.ps1"""; Description: "Otvoriť nastavenie e-mailu"; Flags: nowait postinstall skipifsilent
+; Intentionally no [Run] step: Inno Setup RedirectionGuard can be inherited by
+; PowerShell/uv launched before Setup exits, triggering WinError 448 on user-created
+; junctions. Run the desktop shortcut AFTER closing Setup instead.
+; We preserve Inno Setup's default RedirectionGuard protection.
