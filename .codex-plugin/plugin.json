@@ -2,17 +2,17 @@
   "interface": {
     "displayName": "Webglobe Mail Connector",
     "shortDescription": "Webglobe e-maily v ChatGPT",
-    "longDescription": "Jednoduch\u00e9 nastavenie e-mailu a hesla v jednom lok\u00e1lnom okne. \u010c\u00edtanie IMAP/POP3, sumariz\u00e1cia a volite\u013en\u00e9 odosielanie SMTP (predvolene vypnut\u00e9, vy\u017eaduje potvrdenie ka\u017edej spr\u00e1vy). Bez mazania. Autor: Mgr. Peter Ad\u00e1mek | AI konzultant, https://ai-konzultant.sk/",
-    "developerName": "Mgr. Peter Ad\u00e1mek | AI konzultant",
+    "longDescription": "Čítanie IMAP/POP3, ukladanie konceptov IMAP a potvrdené odosielanie SMTP. Bez mazania.",
+    "developerName": "Mgr. Peter Adámek | AI konzultant",
     "category": "Other",
     "capabilities": [],
     "defaultPrompt": null
   },
   "name": "webglobe-mail-connector",
-  "version": "0.8.3",
-  "description": "Easy one-window Windows setup for read-only IMAP/POP3 and optional user-approved SMTP sending. No deletion.",
+  "version": "0.9.0",
+  "description": "IMAP/POP3 reading, IMAP draft saving, and user-confirmed SMTP sending (selected for new setups). No deletion.",
   "author": {
-    "name": "Mgr. Peter Ad\u00e1mek | AI konzultant",
+    "name": "Mgr. Peter Adámek | AI konzultant",
     "url": "https://ai-konzultant.sk/"
   },
   "keywords": [
@@ -22,7 +22,9 @@
     "SMTP",
     "MCP",
     "email",
-    "optional sending"
+    "optional sending",
+    "IMAP drafts",
+    "drafts"
   ],
   "homepage": "https://ai-konzultant.sk/",
   "repository": "https://github.com/aaaadamek-a11y/chatgpt-email-connector",
