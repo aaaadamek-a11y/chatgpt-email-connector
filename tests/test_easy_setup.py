@@ -49,36 +49,9 @@ class EasySetupSafety(unittest.TestCase):
         self.assertIn('pip install --no-index --find-links', workflow)
 
     def test_installer_does_not_inherit_redirection_guard(self):
-        # Starting PowerShell directly from [Run] can inherit Inno Setup's
-        # RedirectionGuard and block uv's user-created junctions (WinError 448).
+        # The setup GUI must never start as an Inno Setup child process.
         iss=(ROOT/'installer'/'webglobe.iss').read_text(encoding='utf-8')
-        self.assertIsNone(re.search(r'(?im)^\\s*\\[Run\\]\\s*
-        self.assertNotIn('RedirectionGuard=no', iss)
-        self.assertIn('Webglobe Mail - Nastavenie', iss)
-        self.assertIn("Join-Path $appDir 'uv-data'", self.form)
-        self.assertIn("Join-Path $appDir 'uv-python'", self.form)
-
-    def test_version_and_metadata(self):
-        root=json.loads((ROOT/'plugin.json').read_text())
-        legacy=json.loads((ROOT/'.codex-plugin/plugin.json').read_text())
-        self.assertEqual(root['version'],'0.8.3')
-        self.assertEqual(legacy['version'],root['version'])
-        self.assertEqual(root['license'],'Apache-2.0')
-        self.assertTrue(root['author']['name'].startswith('Mgr. Peter Ad'))
-        self.assertEqual(root['homepage'],'https://ai-konzultant.sk/')
-
-    def test_no_deletion_and_no_unapproved_send(self):
-        server=(ROOT/'smtp_server.py').read_text()
-        sender=(ROOT/'smtp_sender.py').read_text()
-        self.assertIn("'destructiveHint':True", server)
-        self.assertNotIn("'name':'delete_message'",server)
-        self.assertIn('confirmer(',sender)
-        self.assertIn("if not settings['enabled']:",sender)
-
-
-if __name__=='__main__':
-    unittest.main()
-, iss))
+        self.assertIsNone(re.search(r'(?im)^\s*\[Run\]\s*$', iss))
         self.assertNotIn('RedirectionGuard=no', iss)
         self.assertIn('Webglobe Mail - Nastavenie', iss)
         self.assertIn("Join-Path $appDir 'uv-data'", self.form)
