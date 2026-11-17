@@ -4,7 +4,7 @@
 ; Build with Inno Setup 6: ISCC.exe installer\webglobe.iss
 
 #define MyAppName "Webglobe Mail Connector"
-#define MyAppVersion "0.8.3"
+#define MyAppVersion "0.9.0"
 #define MyPublisher "Mgr. Peter Adámek | AI konzultant"
 #define MyURL "https://ai-konzultant.sk/"
 
@@ -46,6 +46,7 @@ Source: "..\account_setup.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\pop3_reader.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\smtp_sender.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\smtp_server.py"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\draft_store.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\sending_setup.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\send_confirmation.py"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\package_local.py"; DestDir: "{app}"; Flags: ignoreversion
