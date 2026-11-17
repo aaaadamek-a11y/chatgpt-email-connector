@@ -28,7 +28,7 @@ try {
     function Install-LocalComponents {
         New-Item -ItemType Directory -Force -Path $appDir | Out-Null
         $names = @('server.py','pop3_reader.py','account_setup.py','requirements.txt',
-            'smtp_sender.py','smtp_server.py','sending_setup.py','send_confirmation.py',
+            'smtp_sender.py','smtp_server.py','sending_setup.py','send_confirmation.py','draft_store.py',
             'smtp_package_local.py','windows-easy-setup.ps1','NASTAVIT.cmd',
             'NASTAVIT-UCET.cmd','NASTAVIT-ODOSIELANIE.cmd','windows-smtp-setup.ps1')
         foreach ($name in $names) {
@@ -127,7 +127,7 @@ try {
     }
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.3'
+    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.9.0'
     $form.ClientSize = New-Object System.Drawing.Size(590,375)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
@@ -157,7 +157,7 @@ try {
     $sendToggle = New-Object System.Windows.Forms.CheckBox
     $sendToggle.Text = 'Povoliť aj odosielanie e-mailov (vždy sa vyžaduje potvrdenie)'
     $sendToggle.SetBounds(22,234,545,30)
-    $sendToggle.Checked = [bool]($savedSending -and $savedSending.enabled)
+    $sendToggle.Checked = if ($null -ne $savedSending) { [bool]$savedSending.enabled } else { $true }
     $form.Controls.Add($sendToggle)
     $advancedToggle = New-Object System.Windows.Forms.CheckBox
     $advancedToggle.Text = 'Rozšírené nastavenia serverov (voliteľné)'
