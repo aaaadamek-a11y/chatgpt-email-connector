@@ -29,7 +29,7 @@ class EasySetupSafety(unittest.TestCase):
         self.assertIn('StandardInput.WriteLine($encoded)', self.form)
         self.assertNotIn("$info.Arguments = $pass", self.form)
         self.assertIn("Invoke-SetupScript 'sending_setup.py' @{enabled=$false}", self.form)
-        self.assertIn("$sendToggle.Checked = [bool]($savedSending -and $savedSending.enabled)", self.form)
+        self.assertIn('$sendToggle.Checked = if ($null -ne $savedSending) { [bool]$savedSending.enabled } else { $true }', self.form)
 
     def test_reserved_powershell_host_variable_is_not_written(self):
         # $Host is an automatic read-only variable, case-insensitive in PowerShell.
@@ -60,11 +60,21 @@ class EasySetupSafety(unittest.TestCase):
     def test_version_and_metadata(self):
         root=json.loads((ROOT/'plugin.json').read_text())
         legacy=json.loads((ROOT/'.codex-plugin/plugin.json').read_text())
-        self.assertEqual(root['version'],'0.8.3')
+        self.assertEqual(root['version'],'0.9.0')
         self.assertEqual(legacy['version'],root['version'])
         self.assertEqual(root['license'],'Apache-2.0')
         self.assertTrue(root['author']['name'].startswith('Mgr. Peter Ad'))
         self.assertEqual(root['homepage'],'https://ai-konzultant.sk/')
+
+    def test_draft_module_installed_and_sending_default_selected(self):
+        iss=(ROOT/'installer'/'webglobe.iss').read_text(encoding='utf-8')
+        self.assertIn('draft_store.py', iss)
+        self.assertIn("'draft_store.py'", self.form)
+        self.assertIn('else { $true }', self.form)
+        module=(ROOT/'draft_store.py').read_text(encoding='utf-8')
+        self.assertIn('connection.append(', module)
+        self.assertNotIn('connection.create(', module)
+        self.assertNotIn('connection.delete(', module)
 
     def test_no_deletion_and_no_unapproved_send(self):
         server=(ROOT/'smtp_server.py').read_text()
