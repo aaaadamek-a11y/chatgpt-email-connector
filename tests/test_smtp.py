@@ -27,6 +27,11 @@ keyring=FakeKeyring()
 server.secure_keyring=lambda:keyring
 sys.modules['server']=server
 import smtp_sender
+import draft_store
+# unittest discovery may import draft_store before this test module, so patch shared
+# server references consistently for both test modules; no live mail is contacted.
+smtp_sender.server = server
+draft_store.server = server
 import sending_setup
 import smtp_server
 
