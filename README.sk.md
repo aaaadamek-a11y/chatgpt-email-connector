@@ -12,11 +12,14 @@ Webglobe Mail Connector umožňuje prepojiť ChatGPT s poštovou schránkou cez 
 - **Voliteľne odosielať** textové správy, len ak si to používateľ na svojom počítači samostatne zapne a každé odoslanie potvrdí v grafickom okne.
 - **Nikdy nemaže, nepresúva ani neoznačuje správy** ako prečítané.
 
-**Oprava 0.8.2:** Inštalátor obsahuje knižnice potrebné pre Windows Credential Manager aj bez prístupu na PyPI. Ak už máš funkčné Python prostredie, nebude ich znova sťahovať. Ak zlyhá príprava závislostí, zobrazí cestu k diagnostickému súboru `dependency-stderr.log` v priečinku `%LOCALAPPDATA%\WebglobeMailConnector`. Súbor pred zdieľaním skontroluj na osobné údaje. Pri chybe 0.8.1 si stiahni novší EXE z Releases.
+**Oprava 0.8.3:** Inštalátor obsahuje knižnice potrebné pre Windows Credential Manager aj bez prístupu na PyPI. Ak už máš funkčné Python prostredie, nebude ich znova sťahovať. Ak zlyhá príprava závislostí, zobrazí cestu k diagnostickému súboru `dependency-stderr.log` v priečinku `%LOCALAPPDATA%\WebglobeMailConnector`. Súbor pred zdieľaním skontroluj na osobné údaje. Pri chybe 0.8.1 si stiahni novší EXE z Releases.
 
 ## Jednosúborová inštalácia pre Windows (EXE)
 
-Pre bežných používateľov je pripravený **inštalátor pozostávajúci z jedného súboru** `Webglobe-Mail-Connector-Setup-0.8.2.exe`. Zdrojový kód a dokumentácia zostávajú verejné na GitHube.
+**Dôležité pre verziu 0.8.3:** Po dokončení EXE inštalácie najskôr úplne zavri inštalátor a potom spusti ikonu **Webglobe Mail - Nastavenie** na ploche. Sprievodca sa už nespúšťa z inštalátora, aby sa predišlo chybe Windows `os error 448` (RedirectionGuard / untrusted mount point). Pôvodné účty a heslá sa nemažú. Neodporúčame vypínať ochranu RedirectionGuard ani ručne mazať `.venv`.
+
+
+Pre bežných používateľov je pripravený **inštalátor pozostávajúci z jedného súboru** `Webglobe-Mail-Connector-Setup-0.8.3.exe`. Zdrojový kód a dokumentácia zostávajú verejné na GitHube.
 
 - **[GitHub Releases](https://github.com/aaaadamek-a11y/chatgpt-email-connector/releases)** – tu bude dostupný EXE po úspešnom zostavení, otestovaní a vydaní verzie.
 - **[GitHub Actions – zostavenie EXE](https://github.com/aaaadamek-a11y/chatgpt-email-connector/actions/workflows/build-windows-exe.yml)** – zostavené súbory sú dostupné ako artefakty úspešného behu. GitHub môže vyžadovať prihlásenie.
@@ -62,4 +65,4 @@ Licencia **Apache 2.0** vyžaduje pri ďalšej distribúcii zachovať príslušn
 
 Toto je nezávislý komunitný projekt, nejde o oficiálny produkt Webglobe.
 
-**Oprava 0.8.2:** Opravená chyba PowerShell `Cannot overwrite variable Host because it is read-only or constant` v nastavení účtu. Ak sa objavila, stiahni nový ZIP a znovu spusti `NASTAVIT.cmd`.
+**Oprava 0.8.3:** Opravená chyba PowerShell `Cannot overwrite variable Host because it is read-only or constant` v nastavení účtu. Ak sa objavila, stiahni nový ZIP a znovu spusti `NASTAVIT.cmd`.
