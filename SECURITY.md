@@ -14,6 +14,6 @@ Please report vulnerabilities privately using the contact information on the pro
 - Existing installer downloads an external `uv` installer; review the download and pin verification before widespread corporate deployment.
 - Automated offline tests cannot prove live SMTP behavior. Pilot-test Windows dialogs and SMTP TLS/authentication with your provider.
 
-## Easy setup (v0.8.2)
+## Easy setup (v0.8.3)
 
 The new single-window Windows installer keeps email/password input local and passes secrets through a child process stdin to the OS credential store. SMTP remains opt-in and every actual send requires an additional local approval. No passwords are included in the generated MCP ZIP. Review the external uv installer before running it on managed Windows endpoints.
