@@ -5,6 +5,13 @@
 
 Webglobe Mail Connector umožňuje prepojiť ChatGPT s poštovou schránkou cez lokálny MCP server. Podporuje čítanie, vyhľadávanie a sumarizáciu správ prostredníctvom IMAP alebo POP3 a po novom **voliteľné odosielanie cez SMTP**.
 
+## Nové možnosti vo verzii 0.9.0
+
+- **Odosielanie je pri novej inštalácii predvolene zaškrtnuté.** Funkcia sa však aktivuje až po úspešnom overení a uložení SMTP prihlasovacích údajov. Pri aktualizácii sa zachová predchádzajúce zapnuté/vypnuté nastavenie; používateľ môže voľbu kedykoľvek vypnúť. **Každá odosielaná správa sa ešte musí potvrdiť v lokálnom okne.**
+- **„Ulož tento e-mail do konceptov“** uloží správu cez IMAP do existujúceho priečinka Drafts/Koncepty. Nový nástroj `save_draft` správu neodošle. Vyžaduje výslovnú požiadavku používateľa a nefunguje pri POP3.
+- Ak IMAP server neposkytuje jednoznačne identifikovateľný priečinok Koncepty, doplnok uloženie odmietne; nič nemaže ani nevytvára nové priečinky.
+- Nástroj `prepare_draft` naďalej pripravuje návrh iba v chate bez zmeny poštovej schránky. `save_draft` ho môže následne uložiť.
+
 ## Čo konektor dokáže
 
 - **Čítať a vyhľadávať správy** bez zmeny stavu prečítania. Pri IMAP zobrazí aj dostupné priečinky vrátane odoslanej pošty; POP3 podporuje iba doručenú poštu.
@@ -12,20 +19,20 @@ Webglobe Mail Connector umožňuje prepojiť ChatGPT s poštovou schránkou cez 
 - **Voliteľne odosielať** textové správy, len ak si to používateľ na svojom počítači samostatne zapne a každé odoslanie potvrdí v grafickom okne.
 - **Nikdy nemaže, nepresúva ani neoznačuje správy** ako prečítané.
 
-**Oprava 0.8.3:** Inštalátor obsahuje knižnice potrebné pre Windows Credential Manager aj bez prístupu na PyPI. Ak už máš funkčné Python prostredie, nebude ich znova sťahovať. Ak zlyhá príprava závislostí, zobrazí cestu k diagnostickému súboru `dependency-stderr.log` v priečinku `%LOCALAPPDATA%\WebglobeMailConnector`. Súbor pred zdieľaním skontroluj na osobné údaje. Pri chybe 0.8.1 si stiahni novší EXE z Releases.
+**Oprava 0.9.0:** Inštalátor obsahuje knižnice potrebné pre Windows Credential Manager aj bez prístupu na PyPI. Ak už máš funkčné Python prostredie, nebude ich znova sťahovať. Ak zlyhá príprava závislostí, zobrazí cestu k diagnostickému súboru `dependency-stderr.log` v priečinku `%LOCALAPPDATA%\WebglobeMailConnector`. Súbor pred zdieľaním skontroluj na osobné údaje. Pri chybe 0.8.1 si stiahni novší EXE z Releases.
 
 ## Jednosúborová inštalácia pre Windows (EXE)
 
-**Dôležité pre verziu 0.8.3:** Po dokončení EXE inštalácie najskôr úplne zavri inštalátor a potom spusti ikonu **Webglobe Mail - Nastavenie** na ploche. Sprievodca sa už nespúšťa z inštalátora, aby sa predišlo chybe Windows `os error 448` (RedirectionGuard / untrusted mount point). Pôvodné účty a heslá sa nemažú. Neodporúčame vypínať ochranu RedirectionGuard ani ručne mazať `.venv`.
+**Dôležité pre verziu 0.9.0:** Po dokončení EXE inštalácie najskôr úplne zavri inštalátor a potom spusti ikonu **Webglobe Mail - Nastavenie** na ploche. Sprievodca sa už nespúšťa z inštalátora, aby sa predišlo chybe Windows `os error 448` (RedirectionGuard / untrusted mount point). Pôvodné účty a heslá sa nemažú. Neodporúčame vypínať ochranu RedirectionGuard ani ručne mazať `.venv`.
 
 
-Pre bežných používateľov je pripravený **inštalátor pozostávajúci z jedného súboru** `Webglobe-Mail-Connector-Setup-0.8.3.exe`. Zdrojový kód a dokumentácia zostávajú verejné na GitHube.
+Pre bežných používateľov je pripravený **inštalátor pozostávajúci z jedného súboru** `Webglobe-Mail-Connector-Setup-0.9.0.exe`. Zdrojový kód a dokumentácia zostávajú verejné na GitHube.
 
 - **[GitHub Releases](https://github.com/aaaadamek-a11y/chatgpt-email-connector/releases)** – tu bude dostupný EXE po úspešnom zostavení, otestovaní a vydaní verzie.
 - **[GitHub Actions – zostavenie EXE](https://github.com/aaaadamek-a11y/chatgpt-email-connector/actions/workflows/build-windows-exe.yml)** – zostavené súbory sú dostupné ako artefakty úspešného behu. GitHub môže vyžadovať prihlásenie.
 - EXE rozbalí potrebné súbory do používateľského profilu a po dokončení ponúkne otvorenie jedného nastavenia. **Nie je nutné manuálne rozbaľovať zdrojový ZIP.**
 - Pri prvom nastavení sa môže stiahnuť `uv`, Python a závislosti; používateľ ich nemusí inštalovať ručne.
-- Osobné nastavenia a heslá zostávajú oddelené od inštalátora. SMTP je predvolene vypnuté; odoslanie vyžaduje lokálne potvrdenie a mazanie správ nie je podporované.
+- Osobné nastavenia a heslá zostávajú oddelené od inštalátora. SMTP je pri novej inštalácii predvolene zaškrtnuté, ale vyžaduje úspešnú autentifikáciu; odoslanie vyžaduje lokálne potvrdenie a mazanie správ nie je podporované.
 - Inštalátor zatiaľ nie je digitálne podpísaný, preto môže Windows SmartScreen zobraziť upozornenie. Sťahujte ho iba z oficiálneho repozitára a overte jeho pôvod.
 - Po nastavení sa môže vyžadovať import alebo aktualizácia vygenerovaného lokálneho MCP balíka priamo v ChatGPT. Inštalátor nevykonáva automatické zásahy do účtu ChatGPT.
 
@@ -35,7 +42,7 @@ Pre bežných používateľov je pripravený **inštalátor pozostávajúci z je
 
 1. Stiahni [aktuálny ZIP z GitHubu](https://github.com/aaaadamek-a11y/chatgpt-email-connector/archive/refs/heads/main.zip) a úplne ho rozbaľ.
 2. Spusti **`NASTAVIT.cmd`**. V jednom okne zadaj **e-mailovú adresu a heslo**. Pre bežnú Webglobe schránku sa IMAP server `mail.webglobe.sk` (port 993, TLS) nastaví automaticky.
-3. Ak chceš aj **odosielať**, zaškrtni príslušnú voľbu. SMTP je predvolene vypnuté, využije rovnakú e-mailovú adresu a heslo. Každé skutočné odoslanie ešte vyžaduje potvrdenie v samostatnom miestnom okne.
+3. Ak chceš aj **odosielať**, zaškrtni príslušnú voľbu. SMTP je pri novej inštalácii predvolene zaškrtnuté, ale vyžaduje úspešnú autentifikáciu, využije rovnakú e-mailovú adresu a heslo. Každé skutočné odoslanie ešte vyžaduje potvrdenie v samostatnom miestnom okne.
 4. Pri staršom serveri Webglobe, inej e-mailovej službe alebo POP3 rozbaľ **Rozšírené nastavenia serverov**. Tu zmeníš IMAP/POP3 alebo SMTP server a zabezpečenie.
 5. Klikni **Overiť a uložiť pripojenie**. Sprievodca pripraví lokálny balík `Webglobe-pridat-doplnok.zip`, ktorý potom použiješ na aktualizáciu existujúceho doplnku v kompatibilnom desktopovom klientovi ChatGPT/MCP. Heslo nezadávaj do chatu.
 
@@ -65,4 +72,4 @@ Licencia **Apache 2.0** vyžaduje pri ďalšej distribúcii zachovať príslušn
 
 Toto je nezávislý komunitný projekt, nejde o oficiálny produkt Webglobe.
 
-**Oprava 0.8.3:** Opravená chyba PowerShell `Cannot overwrite variable Host because it is read-only or constant` v nastavení účtu. Ak sa objavila, stiahni nový ZIP a znovu spusti `NASTAVIT.cmd`.
+**Oprava 0.9.0:** Opravená chyba PowerShell `Cannot overwrite variable Host because it is read-only or constant` v nastavení účtu. Ak sa objavila, stiahni nový ZIP a znovu spusti `NASTAVIT.cmd`.
