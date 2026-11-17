@@ -98,9 +98,9 @@ class TestDrafts(unittest.TestCase):
     def test_no_header_injection_and_no_send(self):
         imap = FakeIMAP()
         for bad in (
-            {"to":["one@example.com\\r\\nBcc:evil@example.com"]},
-            {"subject":"A\\nBcc: evil@example.com"},
-            {"body":"illegal\\x00byte"}
+            {"to":["one@example.com\r\nBcc:evil@example.com"]},
+            {"subject":"A\nBcc: evil@example.com"},
+            {"body":"illegal\x00byte"}
         ):
             with self.subTest(bad=bad):
                 args={**self.payload(),**bad}
