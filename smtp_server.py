@@ -4,7 +4,7 @@ import sys
 import server
 import smtp_sender
 
-VERSION = '0.8.2'
+VERSION = '0.8.3'
 
 READ_STATUS_TOOL = {
     'name':'sending_status',
