@@ -3,7 +3,7 @@ param([switch]$PackageOnly)
 $ErrorActionPreference = 'Stop'
 $wizard = Join-Path $PSScriptRoot 'windows-easy-setup.ps1'
 if (-not (Test-Path -LiteralPath $wizard)) {
-    [Console]::Error.WriteLine('The complete 0.8.3 installer is required. Download and extract the newest GitHub ZIP.')
+    [Console]::Error.WriteLine('The complete 0.9.0 installer is required. Download and extract the newest GitHub ZIP.')
     exit 1
 }
 & powershell.exe -NoProfile -STA -ExecutionPolicy Bypass -File $wizard
