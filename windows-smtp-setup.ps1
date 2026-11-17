@@ -7,7 +7,7 @@ try {
   $appDir = Join-Path $env:LOCALAPPDATA 'WebglobeMailConnector'
   $pythonExe = Join-Path $appDir '.venv\Scripts\python.exe'
   if (-not (Test-Path -LiteralPath $pythonExe)) { throw 'Najprv spustite NASTAVIT-UCET.cmd a nastavte prijimanie posty.' }
-  foreach ($name in @('smtp_sender.py','smtp_server.py','sending_setup.py','send_confirmation.py','smtp_package_local.py','windows-smtp-setup.ps1','NASTAVIT-ODOSIELANIE.cmd')) {
+  foreach ($name in @('smtp_sender.py','smtp_server.py','sending_setup.py','send_confirmation.py','draft_store.py','smtp_package_local.py','windows-smtp-setup.ps1','NASTAVIT-ODOSIELANIE.cmd')) {
     $source = Join-Path $PSScriptRoot $name
     $target = Join-Path $appDir $name
     if (-not (Test-Path -LiteralPath $source)) { throw "Chyba subor $name, stiahnite aktualny ZIP konektora." }
