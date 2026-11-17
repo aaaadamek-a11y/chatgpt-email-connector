@@ -10,6 +10,10 @@ try {
     $pythonExe = Join-Path $appDir '.venv\Scripts\python.exe'
     $uvDir = Join-Path $appDir 'runtime'
     $uvExe = Join-Path $uvDir 'uv.exe'
+    # Keep uv's Python installs away from roaming folders and cloud-filtered mounts.
+    $env:UV_DATA_DIR = Join-Path $appDir 'uv-data'
+    $env:UV_PYTHON_INSTALL_DIR = Join-Path $appDir 'uv-python'
+
     $accountPath = Join-Path $env:USERPROFILE '.config\webglobe-mail-connector\account.json'
     $sendingPath = Join-Path $env:USERPROFILE '.config\webglobe-mail-connector\sending.json'
 
@@ -123,7 +127,7 @@ try {
     }
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.2'
+    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.8.3'
     $form.ClientSize = New-Object System.Drawing.Size(590,375)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
