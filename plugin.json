@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "webglobe-mail-connector",
-  "version": "0.8.3",
-  "description": "Easy one-window Windows setup for read-only IMAP/POP3 and optional user-approved SMTP sending. No deletion.",
+  "version": "0.9.0",
+  "description": "IMAP/POP3 reading, IMAP draft saving, and user-confirmed SMTP sending (selected for new setups). No deletion.",
   "author": {
     "name": "Mgr. Peter Adámek | AI konzultant",
     "url": "https://ai-konzultant.sk/"
@@ -13,7 +13,7 @@
       "interface": {
         "displayName": "Webglobe Mail Connector",
         "shortDescription": "Webglobe e-maily v ChatGPT",
-        "longDescription": "Jednoduché nastavenie e-mailu a hesla v jednom lokálnom okne. Čítanie IMAP/POP3, sumarizácia a voliteľné odosielanie SMTP (predvolene vypnuté, vyžaduje potvrdenie každej správy). Bez mazania. Autor: Mgr. Peter Adámek | AI konzultant, https://ai-konzultant.sk/",
+        "longDescription": "Čítanie a sumarizácia e-mailov cez IMAP/POP3, ukladanie konceptov do IMAP schránky a voliteľné SMTP odosielanie s povinným lokálnym potvrdením. Pri novom nastavení je SMTP predvolene zaškrtnuté, aktivuje sa až po úspešnom prihlásení. Bez mazania správ. Autor: Mgr. Peter Adámek | AI konzultant, https://ai-konzultant.sk/",
         "developerName": "Mgr. Peter Adámek | AI konzultant",
         "category": "Other",
         "capabilities": []
@@ -29,6 +29,8 @@
     "SMTP",
     "MCP",
     "email",
-    "optional sending"
+    "optional sending",
+    "IMAP drafts",
+    "drafts"
   ]
 }
