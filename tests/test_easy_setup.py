@@ -48,10 +48,20 @@ class EasySetupSafety(unittest.TestCase):
         self.assertIn('pip download --only-binary=:all:', workflow)
         self.assertIn('pip install --no-index --find-links', workflow)
 
+    def test_installer_does_not_inherit_redirection_guard(self):
+        # Starting PowerShell directly from [Run] can inherit Inno Setup's
+        # RedirectionGuard and block uv's user-created junctions (WinError 448).
+        iss=(ROOT/'installer'/'webglobe.iss').read_text(encoding='utf-8')
+        self.assertNotIn('[Run]', iss)
+        self.assertNotIn('RedirectionGuard=no', iss)
+        self.assertIn('Webglobe Mail - Nastavenie', iss)
+        self.assertIn("Join-Path $appDir 'uv-data'", self.form)
+        self.assertIn("Join-Path $appDir 'uv-python'", self.form)
+
     def test_version_and_metadata(self):
         root=json.loads((ROOT/'plugin.json').read_text())
         legacy=json.loads((ROOT/'.codex-plugin/plugin.json').read_text())
-        self.assertEqual(root['version'],'0.8.2')
+        self.assertEqual(root['version'],'0.8.3')
         self.assertEqual(legacy['version'],root['version'])
         self.assertEqual(root['license'],'Apache-2.0')
         self.assertTrue(root['author']['name'].startswith('Mgr. Peter Ad'))
