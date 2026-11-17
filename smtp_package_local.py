@@ -21,7 +21,7 @@ def build():
         raise RuntimeError('Incorrect read/write tool permissions.')
     manifest={'$schema':'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json',
       'name':'webglobe-mail-connector','version':VERSION,
-      'description':'Easy setup for IMAP/POP3 reading and optional user-confirmed SMTP sending; no deletion.',
+      'description':'Easy setup for IMAP/POP3 reading and SMTP sending and IMAP Drafts saving; no deletion.',
       'homepage':'https://ai-konzultant.sk/',
       'repository':'https://github.com/aaaadamek-a11y/chatgpt-email-connector',
       'license':'Apache-2.0','author':{'name':'Mgr. Peter Adámek | AI konzultant','url':'https://ai-konzultant.sk/'}}
