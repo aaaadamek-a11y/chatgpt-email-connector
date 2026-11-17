@@ -192,7 +192,7 @@ try {
     $save.Text = 'Overiť a uložiť pripojenie'
     $save.SetBounds(22,315,245,35); $form.Controls.Add($save)
     $status = New-Object System.Windows.Forms.Label
-    $status.Text = 'Odosielanie je štandardne vypnuté. Mazanie nie je podporované.'
+    $status.Text = 'Odosielanie sa zapne až po uložení. Mazanie nie je podporované.'
     $status.SetBounds(290,315,274,45); $form.Controls.Add($status)
     $advancedToggle.Add_CheckedChanged({
         $show = $advancedToggle.Checked
