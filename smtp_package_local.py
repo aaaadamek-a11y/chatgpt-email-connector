@@ -5,7 +5,7 @@ import subprocess
 import sys
 import zipfile
 
-VERSION = '0.8.3'
+VERSION = '0.9.0'
 
 def build():
     base = Path(__file__).resolve().parent
@@ -15,7 +15,7 @@ def build():
     p=subprocess.run([python,script],input=json.dumps(request)+'\n',text=True,capture_output=True,timeout=15,check=True)
     tools = json.loads(p.stdout)['result']['tools']
     names = {tool['name'] for tool in tools}
-    if names != {'list_messages','search_messages','read_message','list_mailboxes','prepare_draft','sending_status','send_message'}:
+    if names != {'list_messages','search_messages','read_message','list_mailboxes','prepare_draft','sending_status','send_message','save_draft'}:
         raise RuntimeError('Unexpected MCP tools.')
     if any((t['name']=='send_message') == t['annotations']['readOnlyHint'] for t in tools):
         raise RuntimeError('Incorrect read/write tool permissions.')
@@ -33,7 +33,7 @@ def build():
         z.writestr('plugin.json',json.dumps(manifest,ensure_ascii=False,indent=2))
         z.writestr('mcp.json',json.dumps(config,ensure_ascii=False,indent=2))
     (target/'AKO-PRIDAT.txt').write_text('Importujte Webglobe-pridat-doplnok.zip do podporovaneho lokalneho MCP klienta.\n'
-      'Odosielanie je predvolene vypnute. Nastavujte ho cez NASTAVIT.cmd.\n'
+      'Pri novej instalacii je odosielanie navrhnute zapnute, povoli sa az po uspesnom SMTP prihlaseni. Nastavujte ho cez NASTAVIT.cmd.\n'
       'Pri kazdom odoslani musite potvrdit spravu v lokalnom okne. Mazanie nie je podporovane.\n',encoding='utf-8')
     return zip_path
 
