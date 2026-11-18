@@ -14,10 +14,10 @@ Please report vulnerabilities privately using the contact information on the pro
 - Existing installer downloads an external `uv` installer; review the download and pin verification before widespread corporate deployment.
 - Automated offline tests cannot prove live SMTP behavior. Pilot-test Windows dialogs and SMTP TLS/authentication with your provider.
 
-## Easy setup (v0.9.1)
+## Easy setup (v0.9.2)
 
 The new single-window Windows installer keeps email/password input local and passes secrets through a child process stdin to the OS credential store. SMTP remains opt-in and every actual send requires an additional local approval. No passwords are included in the generated MCP ZIP. Review the external uv installer before running it on managed Windows endpoints.
 
-### IMAP draft writes (0.9.1)
+### IMAP draft writes (0.9.2)
 
 The `save_draft` tool is an explicit write operation to the authenticated user's existing IMAP Drafts folder only. It performs IMAP APPEND with \\Draft, never SMTP send, CREATE, DELETE, EXPUNGE, MOVE or flag changes on existing messages. Untrusted instructions in incoming mail cannot authorize saves. POP3 draft saving is rejected. The setup checkbox for SMTP is selected on a new installation only; sending is not enabled until local credential verification and saved settings, and each send requires local approval. Existing SMTP opt-out is retained on updates.
