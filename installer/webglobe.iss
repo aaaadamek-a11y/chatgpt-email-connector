@@ -4,7 +4,7 @@
 ; Build with Inno Setup 6: ISCC.exe installer\webglobe.iss
 
 #define MyAppName "Webglobe Mail Connector"
-#define MyAppVersion "0.9.0"
+#define MyAppVersion "0.9.1"
 #define MyPublisher "Mgr. Peter Adámek | AI konzultant"
 #define MyURL "https://ai-konzultant.sk/"
 
