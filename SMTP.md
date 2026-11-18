@@ -1,4 +1,4 @@
-# Optional SMTP sending — Webglobe Mail Connector 0.9.1
+# Optional SMTP sending — Webglobe Mail Connector 0.9.2
 
 **New setup: SMTP checkbox selected by default; credential verification required before activation.** Run `NASTAVIT.cmd` in the extracted project folder. (Legacy `NASTAVIT-ODOSIELANIE.cmd` opens the same wizard.) Existing mail-reading permissions are unchanged.
 
@@ -21,6 +21,6 @@ No deletion, moving, marking as read, attachments, HTML or background sending. S
 **Original author:** Mgr. Peter Adámek | AI konzultant  
 **Website:** https://ai-konzultant.sk/
 
-### Version 0.9.1 setup behavior
+### Version 0.9.2 setup behavior
 
 New installations start with the **send checkbox selected**, but SMTP sending remains unavailable until the user successfully verifies and saves their credentials. Existing saved disabled/enabled preferences are preserved. Sending always requires a separate explicit local confirmation. `save_draft` is a separate IMAP write operation that **does not send** and requires an explicit request to save; it APPENDs to a discoverable Drafts folder only. No POP3 Drafts support, mailbox creation or deletion.
