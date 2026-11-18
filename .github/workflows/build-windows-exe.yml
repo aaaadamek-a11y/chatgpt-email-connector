@@ -88,7 +88,7 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'Local MCP plugin export failed' }
           $package = Join-Path $target 'Pridat-do-aplikacie\Webglobe-pridat-doplnok.zip'
           if (-not (Test-Path $package)) { throw 'Local MCP plugin ZIP was not created' }
-          & $venvPython -c "import zipfile,json,sys;z=zipfile.ZipFile(sys.argv[1]); assert set(z.namelist())=={'plugin.json','mcp.json','launch-webglobe-mcp.ps1'}; assert json.loads(z.read('plugin.json'))['version']=='0.9.2'; m=json.loads(z.read('mcp.json'))['mcpServers']['webglobe-mail']; assert m['command']=='powershell.exe'; assert '${PLUGIN_ROOT}/launch-webglobe-mcp.ps1' in m['args']; assert 'C:\\\\Users\\\\' not in str(m)" $package
+          & $venvPython -c "import zipfile,json,sys;z=zipfile.ZipFile(sys.argv[1]); assert set(z.namelist())=={'plugin.json','mcp.json','launch-webglobe-mcp.ps1'}; assert json.loads(z.read('plugin.json'))['version']=='0.9.2'; m=json.loads(z.read('mcp.json'))['mcpServers']['webglobe-mail']; assert m['command']=='powershell.exe'; assert m['args'][-1]==chr(36)+'{PLUGIN_ROOT}/launch-webglobe-mcp.ps1'; assert 'C:\\\\Users\\\\' not in str(m)" $package
           if ($LASTEXITCODE -ne 0) { throw 'Local MCP plugin ZIP contents invalid' }
           Write-Host 'Windows plugin export and ZIP validation passed.'
 
