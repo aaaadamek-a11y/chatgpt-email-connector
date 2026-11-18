@@ -9,7 +9,7 @@
     "defaultPrompt": null
   },
   "name": "webglobe-mail-connector",
-  "version": "0.9.1",
+  "version": "0.9.2",
   "description": "IMAP/POP3 reading, IMAP draft saving, and user-confirmed SMTP sending (selected for new setups). No deletion.",
   "author": {
     "name": "Mgr. Peter Adámek | AI konzultant",
