@@ -1,4 +1,4 @@
-WEBGLOBE MAIL CONNECTOR 0.9.1 - JEDNODUCHE NASTAVENIE (WINDOWS)
+WEBGLOBE MAIL CONNECTOR 0.9.2 - JEDNODUCHE NASTAVENIE (WINDOWS)
 Original author: Mgr. Peter Adámek | AI konzultant
 Website: https://ai-konzultant.sk/
 
@@ -25,6 +25,6 @@ objavit v IMAP priecinku Odoslane. Pri chybach neposielajte automaticky znova.
 Viac: README.sk.md, SMTP.md, SECURITY.md, LICENSE, NOTICE
 GitHub: https://github.com/aaaadamek-a11y/chatgpt-email-connector
 
-0.9.1: Oprava kolizie s rezervovanou premennou PowerShell $Host v konfiguracii.
+0.9.2: Oprava kolizie s rezervovanou premennou PowerShell $Host v konfiguracii.
 
-NOVINKY 0.9.1: Pri novej instalacii je SMTP vo formulari predvolene vybrane, ale az po overeni konta sa moze pouzit. Predosle nastavenie pri aktualizacii zostava zachovane. Kazde odoslanie vyzaduje potvrdenie v lokalnom okne. Pri IMAP mozete v ChatGPT poziadat o ulozenie rozpracovaneho e-mailu do priecinka Koncepty (save_draft). POP3 tento zapis nepodporuje. Ziadne mazanie.
+NOVINKY 0.9.2: Pri novej instalacii je SMTP vo formulari predvolene vybrane, ale az po overeni konta sa moze pouzit. Predosle nastavenie pri aktualizacii zostava zachovane. Kazde odoslanie vyzaduje potvrdenie v lokalnom okne. Pri IMAP mozete v ChatGPT poziadat o ulozenie rozpracovaneho e-mailu do priecinka Koncepty (save_draft). POP3 tento zapis nepodporuje. Ziadne mazanie.
