@@ -12,7 +12,7 @@ import sys
 import tempfile
 import zipfile
 
-VERSION = '0.9.1'
+VERSION = '0.9.2'
 EXPECTED_TOOLS = {'list_messages','search_messages','read_message','list_mailboxes',
                   'prepare_draft','sending_status','send_message','save_draft'}
 
@@ -34,10 +34,10 @@ def build():
         raise RuntimeError('Sending must retain irreversible-action annotation')
 
     base = Path(__file__).absolute().parent
-    executable = os.path.abspath(sys.executable)
-    endpoint = os.path.abspath(str(base/'smtp_server.py'))
-    if not Path(executable).is_file() or not Path(endpoint).is_file():
-        raise RuntimeError('Python interpreter or MCP server missing')
+    launcher = base/'launch-webglobe-mcp.ps1'
+    endpoint = base/'smtp_server.py'
+    if not launcher.is_file() or not endpoint.is_file():
+        raise RuntimeError('Local MCP launcher or server missing')
 
     manifest={'$schema':'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json',
       'name':'webglobe-mail-connector','version':VERSION,
@@ -45,9 +45,12 @@ def build():
       'homepage':'https://ai-konzultant.sk/',
       'repository':'https://github.com/aaaadamek-a11y/chatgpt-email-connector',
       'license':'Apache-2.0','author':{'name':'Mgr. Peter Adámek | AI konzultant','url':'https://ai-konzultant.sk/'}}
+    # Portable MCP schema: command must be a bare executable or contained path.
+    # The script path resolves inside the installed plugin package, not to this PC.
     config={'$schema':'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json',
-      'mcpServers':{'webglobe-mail':{'type':'stdio','command':executable,
-                    'args':[endpoint],'cwd':str(base)}}}
+      'mcpServers':{'webglobe-mail':{'type':'stdio','command':'powershell.exe',
+                    'args':['-NoProfile','-NonInteractive','-ExecutionPolicy','Bypass',
+                            '${PLUGIN_ROOT}/launch-webglobe-mcp.ps1']}}}
     target=base/'Pridat-do-aplikacie'
     target.mkdir(parents=True,exist_ok=True)
     zip_path=target/'Webglobe-pridat-doplnok.zip'
@@ -57,17 +60,19 @@ def build():
         with zipfile.ZipFile(tmp,'w',zipfile.ZIP_DEFLATED) as z:
             z.writestr('plugin.json',json.dumps(manifest,ensure_ascii=False,indent=2))
             z.writestr('mcp.json',json.dumps(config,ensure_ascii=False,indent=2))
+            z.write(launcher,arcname='launch-webglobe-mcp.ps1')
         with zipfile.ZipFile(tmp) as z:
-            if z.testzip() is not None or set(z.namelist()) != {'plugin.json','mcp.json'}:
+            if z.testzip() is not None or set(z.namelist()) != {'plugin.json','mcp.json','launch-webglobe-mcp.ps1'}:
                 raise RuntimeError('Generated archive failed verification')
         os.replace(tmp,zip_path)
     finally:
         if os.path.exists(tmp): os.unlink(tmp)
 
     (target/'AKO-PRIDAT.txt').write_text(
-      'Importujte Webglobe-pridat-doplnok.zip do kompatibilneho lokalneho MCP klienta.\n'
+      'Importujte Webglobe-pridat-doplnok.zip do kompatibilneho lokalneho MCP klienta vo Windows.\n'
       'Ukladanie do Konceptov vyzaduje IMAP a prikaz uzivatela.\n'
       'SMTP sa povoli az po uspesnom overeni a kazde odoslanie vyzaduje lokalne potvrdenie.\n'
+      'Najskor nastavte schranku cez Webglobe Mail - Nastavenie. Plugin ZIP obsahuje iba prenosny PowerShell spustac; Python runtime zostava lokalny.\n'
       'Mazanie nie je podporovane.\n',encoding='utf-8')
     return zip_path
 
