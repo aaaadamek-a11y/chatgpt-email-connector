@@ -5,7 +5,7 @@ import server
 import smtp_sender
 import draft_store
 
-VERSION = '0.9.0'
+VERSION = '0.9.1'
 
 READ_STATUS_TOOL = {
     'name':'sending_status',
