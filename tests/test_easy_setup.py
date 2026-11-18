@@ -60,7 +60,7 @@ class EasySetupSafety(unittest.TestCase):
     def test_version_and_metadata(self):
         root=json.loads((ROOT/'plugin.json').read_text())
         legacy=json.loads((ROOT/'.codex-plugin/plugin.json').read_text())
-        self.assertEqual(root['version'],'0.9.1')
+        self.assertEqual(root['version'],'0.9.2')
         self.assertEqual(legacy['version'],root['version'])
         self.assertEqual(root['license'],'Apache-2.0')
         self.assertTrue(root['author']['name'].startswith('Mgr. Peter Ad'))
@@ -82,6 +82,15 @@ class EasySetupSafety(unittest.TestCase):
         exporter=(ROOT/'smtp_package_local.py').read_text(encoding='utf-8')
         self.assertNotIn('subprocess.run', exporter)
         self.assertIn('from smtp_server import TOOLS', exporter)
+
+    def test_portable_mcp_launcher_is_installed(self):
+        installer=(ROOT/'installer'/'webglobe.iss').read_text(encoding='utf-8')
+        self.assertIn('launch-webglobe-mcp.ps1', installer)
+        self.assertIn("'launch-webglobe-mcp.ps1'", self.form)
+        export=(ROOT/'smtp_package_local.py').read_text(encoding='utf-8')
+        self.assertIn("'command':'powershell.exe'", export)
+        self.assertIn('launch-webglobe-mcp.ps1', export)
+        self.assertNotIn("'command':executable", export)
 
     def test_no_deletion_and_no_unapproved_send(self):
         server=(ROOT/'smtp_server.py').read_text()
