@@ -127,7 +127,7 @@ try {
     }
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.9.0'
+    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.9.1'
     $form.ClientSize = New-Object System.Drawing.Size(590,375)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
@@ -258,8 +258,16 @@ try {
             }
             $pass = $null; $passField.Clear()
             $status.Text = 'Pripravujem doplnok...'; $form.Refresh()
-            & $pythonExe (Join-Path $appDir 'smtp_package_local.py') | Out-Null
-            if ($LASTEXITCODE -ne 0) { throw 'Priprava balika doplnku zlyhala.' }
+            # Capture export diagnostics without showing passwords or server replies.
+            $exportStdout = Join-Path $appDir 'package-export-stdout.log'
+            $exportStderr = Join-Path $appDir 'package-export-stderr.log'
+            $export = Start-Process -FilePath $pythonExe -ArgumentList @('"' + (Join-Path $appDir 'smtp_package_local.py') + '"') -PassThru -Wait -NoNewWindow -RedirectStandardOutput $exportStdout -RedirectStandardError $exportStderr
+            if ($export.ExitCode -ne 0) {
+                throw ('Priprava balika doplnku zlyhala. Pozrite diagnostiku: ' + $exportStderr)
+            }
+            if (-not (Test-Path -LiteralPath (Join-Path $appDir 'Pridat-do-aplikacie\Webglobe-pridat-doplnok.zip'))) {
+                throw ('Balik sa nevytvoril. Diagnostika: ' + $exportStderr)
+            }
             $packageDir = Join-Path $appDir 'Pridat-do-aplikacie'
             $shortcut = (New-Object -ComObject WScript.Shell).CreateShortcut((Join-Path ([Environment]::GetFolderPath('Desktop')) 'Webglobe Mail - nastavenie.lnk'))
             $shortcut.TargetPath = Join-Path $env:SystemRoot 'System32\WindowsPowerShell\v1.0\powershell.exe'
