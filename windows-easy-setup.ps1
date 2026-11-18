@@ -29,7 +29,7 @@ try {
         New-Item -ItemType Directory -Force -Path $appDir | Out-Null
         $names = @('server.py','pop3_reader.py','account_setup.py','requirements.txt',
             'smtp_sender.py','smtp_server.py','sending_setup.py','send_confirmation.py','draft_store.py',
-            'smtp_package_local.py','windows-easy-setup.ps1','NASTAVIT.cmd',
+            'smtp_package_local.py','launch-webglobe-mcp.ps1','windows-easy-setup.ps1','NASTAVIT.cmd',
             'NASTAVIT-UCET.cmd','NASTAVIT-ODOSIELANIE.cmd','windows-smtp-setup.ps1')
         foreach ($name in $names) {
             $src = Join-Path $sourceDir $name
@@ -127,7 +127,7 @@ try {
     }
 
     $form = New-Object System.Windows.Forms.Form
-    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.9.1'
+    $form.Text = 'Webglobe Mail Connector | Jednoduché nastavenie 0.9.2'
     $form.ClientSize = New-Object System.Drawing.Size(590,375)
     $form.StartPosition = 'CenterScreen'
     $form.FormBorderStyle = 'FixedDialog'
