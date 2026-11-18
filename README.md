@@ -21,7 +21,7 @@
 
 Supported MCP tools: `list_mailboxes`, `list_messages`, `search_messages`, `read_message`, `prepare_draft`, `sending_status`, and **`send_message`**. The sending tool is advertised as a write-capable, irreversible operation; it is blocked until enabled by the current Windows user. Sending is never triggered by received email content alone.
 
-## Easy setup / update on Windows (v0.9.1)
+## Easy setup / update on Windows (v0.9.2)
 
 1. [Download the current ZIP](https://github.com/aaaadamek-a11y/chatgpt-email-connector/archive/refs/heads/main.zip) and **extract all files** to one folder.
 2. Double-click **`NASTAVIT.cmd`**. A single setup window asks only for **your full email address** and **password**. For standard Webglobe mailboxes, IMAP (`mail.webglobe.sk`, port 993) is preconfigured; no server knowledge is required.
@@ -52,7 +52,7 @@ For commonly configured Webglobe mailboxes the published outgoing server is `mai
 
 ## Status / limitations
 
-Version **0.9.1** introduces a unified Windows setup window and retains optional SMTP sending with per-user consent. Automated offline tests validate disabled-by-default behavior and approval paths. Live Webglobe SMTP, Windows GUI and installation require an actual Windows pilot; do not treat offline tests as proof of production delivery.
+Version **0.9.2** introduces a unified Windows setup window and retains optional SMTP sending with per-user consent. Automated offline tests validate disabled-by-default behavior and approval paths. Live Webglobe SMTP, Windows GUI and installation require an actual Windows pilot; do not treat offline tests as proof of production delivery.
 
 ## License and author attribution
 
@@ -60,16 +60,20 @@ Copyright 2026 **Mgr. Peter Adámek | AI konzultant** — https://ai-konzultant.
 
 Licensed under the **Apache License, Version 2.0**. See [LICENSE](LICENSE) and [NOTICE](NOTICE). Redistributed copies and modified versions must preserve applicable copyright, license and NOTICE attribution as provided by the license.
 
-**0.9.1 fix:** Corrected the Windows PowerShell automatic `$Host` variable collision in the account setup wizard. Download and extract the updated ZIP before re-running `NASTAVIT.cmd`.
+**0.9.2 fix:** Corrected the Windows PowerShell automatic `$Host` variable collision in the account setup wizard. Download and extract the updated ZIP before re-running `NASTAVIT.cmd`.
 
-**Windows installer 0.9.1:** ships predownloaded Windows wheels for offline `keyring` setup and skips dependency installation when already working. On failure, check `%LOCALAPPDATA%\WebglobeMailConnector\dependency-stderr.log` after removing private details.
+**Windows installer 0.9.2:** ships predownloaded Windows wheels for offline `keyring` setup and skips dependency installation when already working. On failure, check `%LOCALAPPDATA%\WebglobeMailConnector\dependency-stderr.log` after removing private details.
 
-**Windows v0.9.1 / error 448:** The setup wizard is no longer launched from inside Inno Setup. Finish and close the installer first; then launch the **Webglobe Mail - Nastavenie** desktop shortcut. This avoids inheriting Inno Setup's RedirectionGuard mitigation, without disabling security protection or deleting mailbox credentials.
+**Windows v0.9.2 / error 448:** The setup wizard is no longer launched from inside Inno Setup. Finish and close the installer first; then launch the **Webglobe Mail - Nastavenie** desktop shortcut. This avoids inheriting Inno Setup's RedirectionGuard mitigation, without disabling security protection or deleting mailbox credentials.
 
-### Version 0.9.1 – IMAP Drafts and sending defaults
+### Version 0.9.2 – IMAP Drafts and sending defaults
 
 For new local setups the SMTP checkbox is selected by default; sending remains technically disabled until successful local SMTP authentication and explicit save. Existing users retain their previous opt-in/out choice. Every actual send still needs explicit chat intent and a separate local confirmation window. The `save_draft` MCP tool uses IMAP APPEND with the \\Draft flag to save to an existing, unambiguous Drafts folder. POP3 cannot save server-side drafts; no deletion or move operations have been added. The in-chat `prepare_draft` remains read-only.
 
-### Fix 0.9.1: local MCP ZIP export
+### Fix 0.9.2: local MCP ZIP export
 
 The exporter imports the registered tool descriptions without spawning a second Python interpreter. The Windows installer now checks the generated ZIP and captures safe errors in `%LOCALAPPDATA%\WebglobeMailConnector\package-export-stderr.log`. CI exercises the export on Windows without accessing mail credentials.
+
+### v0.9.2 — portable MCP import correction
+
+The prior exported ZIP used an absolute `python.exe` path in `mcp.json`, which portable plugin ingestion rejects. New exports contain `plugin.json`, `mcp.json` using the bare executable `powershell.exe`, and a contained `launch-webglobe-mcp.ps1` invoked via `${PLUGIN_ROOT}`. The script locates the separately installed per-user Python MCP service on Windows. This requires a compatible local MCP client; cloud-only web clients cannot run local commands.
