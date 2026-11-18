@@ -82,6 +82,15 @@ jobs:
           & $venvPython -c 'import keyring; import keyring.backends.Windows'
           if ($LASTEXITCODE -ne 0) { throw 'Offline keyring import failed' }
           Write-Host 'Offline dependencies verified without PyPI network access.'
+          # End-to-end packaging smoke test under the installed Windows tree,
+          # using only tool definitions and no mailbox credentials.
+          & $venvPython (Join-Path $target 'smtp_package_local.py')
+          if ($LASTEXITCODE -ne 0) { throw 'Local MCP plugin export failed' }
+          $package = Join-Path $target 'Pridat-do-aplikacie\Webglobe-pridat-doplnok.zip'
+          if (-not (Test-Path $package)) { throw 'Local MCP plugin ZIP was not created' }
+          & $venvPython -c "import zipfile,json,sys;z=zipfile.ZipFile(sys.argv[1]); assert set(z.namelist())=={'plugin.json','mcp.json'}; assert json.loads(z.read('plugin.json'))['version']=='0.9.1'" $package
+          if ($LASTEXITCODE -ne 0) { throw 'Local MCP plugin ZIP contents invalid' }
+          Write-Host 'Windows plugin export and ZIP validation passed.'
 
 
       - name: Upload installer build
@@ -113,9 +122,9 @@ jobs:
             Write-Host "A newer commit is available; skipping release publication."
             exit 0
           }
-          $version = 'v0.9.0'
+          $version = 'v0.9.1'
           $exe = (Get-ChildItem dist -Filter '*.exe' | Select-Object -First 1).FullName
-          $notes = "Single-file unsigned Windows installer fixes WinError 448 by launching the mail setup only after Inno Setup exits, while keeping RedirectionGuard enabled. Offline keyring wheels included. Source commit: $env:GITHUB_SHA. Keyring is reused when already installed; failed dependency setup records diagnostic logs. New setups select SMTP by default but require verified credentials before enabling, and every send requires user confirmation. IMAP Drafts saving is supported without SMTP delivery; no email deletion is supported. Windows GUI and live Webglobe connection still require user testing. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
+          $notes = "Single-file unsigned Windows installer fixes local plugin ZIP export errors and WinError 448 by launching the mail setup only after Inno Setup exits, while keeping RedirectionGuard enabled. Offline keyring wheels included. Source commit: $env:GITHUB_SHA. Keyring is reused when already installed; failed dependency setup records diagnostic logs. New setups select SMTP by default but require verified credentials before enabling, and every send requires user confirmation. IMAP Drafts saving is supported without SMTP delivery; no email deletion is supported. Windows GUI and live Webglobe connection still require user testing. Original author: Mgr. Peter Adámek | AI konzultant — https://ai-konzultant.sk/."
           gh release view $version *> $null
           if ($LASTEXITCODE -eq 0) {
             gh release upload $version $exe --clobber
